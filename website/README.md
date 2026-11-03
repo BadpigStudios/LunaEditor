@@ -24,8 +24,8 @@ an asset named `Luna-<version>-windows-x64.zip` or `Luna-windows-x64.zip`, the s
 GitHub API to point directly to it and show its actual version and size. A missing release is
 identified honestly; API failures keep the ordinary Releases link. No GitHub token is used.
 
-Build/package locally with `build.ps1` and `tools/package.ps1`, then upload the generated ZIP to
-a GitHub release. Do not commit executable ZIPs into this website folder.
+The maintainer can upload a packaged Windows ZIP to a GitHub Release. Native editor build sources
+are not included in this website-only repository. Do not commit executable ZIPs into this website folder.
 
 ## Local preview
 
@@ -42,7 +42,7 @@ links remain usable without JavaScript.
 `tools/website_checks.cjs` checks desktop/mobile layouts, keyboard tabs, release success/missing/offline
 states, links and browser errors using a locally installed Playwright and Chromium/Edge.
 The screenshots show the actual native editor with original, generated demonstration artwork.
-Regenerate them with `tools/ui_v026.py`; no user footage or project content is published.
+The native editor source/capture tools are kept separately; no user footage or project content is published.
 
 ## Publication scope
 
