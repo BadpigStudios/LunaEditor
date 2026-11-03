@@ -4,7 +4,7 @@ const tools = {
   edit: {
     number: "01 / THE EDIT", title: "A timeline that gives ideas room.",
     description: "Arrange visual and audio tracks, trim from either edge, and move a whole selection together. Snapping keeps your cuts where you want them.",
-    details: ["Multitrack editing & group selection", "Ripple edits, slip tools & timeline markers", "Source preview, bins & media relinking"],
+    details: ["Multitrack editing & group selection", "Caption tracks with SRT / VTT import & export", "Ripple edits, markers & source organization"],
     image: "workspace.webp", alt: "Video clips arranged on Luna's multitrack timeline.",
     caption: "A real Luna workspace, with original demo artwork."
   },
@@ -25,7 +25,7 @@ const tools = {
   music: {
     number: "04 / THE SOUND", title: "Let your story find its rhythm.",
     description: "Write a melody in the piano roll, paint a rhythm, or start with a chord progression. Draw notes, shape velocity, and audition your pattern.",
-    details: ["Piano roll with draw, paint & chord tools", "Bundled instruments, MIDI & SoundFont 2", "Audio effects, fades & audio-only export"],
+    details: ["Piano roll, MIDI & SoundFont 2 instruments", "Dialogue-driven music ducking & editable gain curves", "Audio mixer, effects & audio-only export"],
     image: "music.webp", alt: "Luna's piano roll with notes, a piano keyboard and a velocity lane.",
     caption: "A place for the soundtrack, right inside your editor."
   }

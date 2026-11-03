@@ -67,7 +67,7 @@ async function main() {
     await page.getByRole("link", { name: "User guide", exact: true }).first().click();
     assert.match(page.url(), /\/LunaEditor\/user-guide\.html$/);
     await page.getByRole("heading", { name: "Luna user guide", exact: true }).waitFor();
-    assert.equal(await page.locator(".guide-section").count(), 14);
+    assert.equal(await page.locator(".guide-section").count(), 17);
     assert(await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].every(link => document.getElementById(link.hash.slice(1)))));
     const search = page.locator("#guide-search");
     await search.fill("SoundFont");
@@ -80,9 +80,12 @@ async function main() {
     await page.waitForFunction(() => !document.querySelector("#export").hidden);
     assert.equal(await search.inputValue(), "");
     assert.match(await page.locator("#export").innerText(), /Sequence.*every tab/s);
+    assert.match(await page.locator("#captions-and-subtitles").innerText(), /SRT.*VTT/s);
+    assert.match(await page.locator("#automatic-music-ducking").innerText(), /gain curve/);
+    assert.match(await page.locator("#controlled-prerender").innerText(), /disk cache budget/);
     await search.fill("keyframes");
     await search.press("Escape");
-    assert.equal(await page.locator(".guide-section:visible").count(), 14);
+    assert.equal(await page.locator(".guide-section:visible").count(), 17);
     await search.fill("music");
     await page.locator("#guide-clear").click();
     assert.equal(await search.inputValue(), "");
@@ -124,7 +127,7 @@ async function main() {
     assert(await plain.locator("h1").isVisible());
     assert(await plain.locator("#download-button").isVisible());
     await plain.goto(url + "user-guide.html", { waitUntil: "networkidle" });
-    assert.equal(await plain.locator(".guide-section:visible").count(), 14);
+    assert.equal(await plain.locator(".guide-section:visible").count(), 17);
     await noScript.close();
 
     // Only the private editor checkout includes the packaged, self-contained manual.
@@ -143,7 +146,7 @@ async function main() {
       await manual.close();
     }
     assert.deepEqual(errors, []);
-    console.log("PASS: desktop/mobile layouts, local assets under /LunaEditor/, keyboard tabs, FAQ, release downloads/fallbacks, guide links/search/clear/anchors, 14 sections with no script, offline manual, and no browser errors.");
+    console.log("PASS: desktop/mobile layouts, local assets under /LunaEditor/, keyboard tabs, FAQ, release downloads/fallbacks, guide links/search/clear/anchors, 17 sections with no script, offline manual, and no browser errors.");
   } finally {
     await browser.close();
   }
