@@ -67,13 +67,15 @@ async function main() {
 
     const release = await browser.newContext();
     await release.route("https://api.github.com/**", route => route.fulfill({
-      status: 200, contentType: "application/json", body: JSON.stringify({ tag_name: "v0.26.0", assets: [{ name: "Luna-0.26.0-windows-x64.zip", size: 89128960, browser_download_url: "https://github.com/BadpigStudios/LunaEditor/releases/download/v0.26.0/Luna-0.26.0-windows-x64.zip" }] })
+      status: 200, contentType: "application/json", body: JSON.stringify([{ tag_name: "older", published_at: "2026-11-01T00:00:00Z", assets: [] }, { tag_name: "v0.26.0", published_at: "2026-11-03T00:00:00Z", assets: [{ name: "Luna-0.26.0-windows-x64-setup.exe", size: 64000000, browser_download_url: "https://github.com/BadpigStudios/LunaEditor/releases/download/v0.26.0/Luna-0.26.0-windows-x64-setup.exe" }, { name: "Luna-0.26.0-windows-x64.zip", size: 89128960, browser_download_url: "https://github.com/BadpigStudios/LunaEditor/releases/download/v0.26.0/Luna-0.26.0-windows-x64.zip" }] }])
     }));
     const released = await release.newPage();
     await released.goto(url, { waitUntil: "networkidle" });
     assert.match(await released.locator("#download-label").innerText(), /^Download Luna/);
     assert.match(await released.locator("#download-button").getAttribute("href"), /releases\/download\/v0.26.0/);
-    assert.match(await released.locator("#release-status").innerText(), /85.0 MB/);
+    assert.match(await released.locator("#release-status").innerText(), /EXE installer/);
+    assert.match(await released.locator("#download-button").getAttribute("href"), /\.exe$/);
+    assert.match(await released.locator("#portable-download").getAttribute("href"), /\.zip$/);
     await release.close();
 
     const offline = await browser.newContext({ reducedMotion: "reduce" });

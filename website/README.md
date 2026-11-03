@@ -19,10 +19,9 @@ This follows the [official GitHub Pages custom-workflow guide](https://docs.gith
 
 ## Windows downloads
 
-The download button initially links to the repository's Releases page. When a public release has
-an asset named `Luna-<version>-windows-x64.zip` or `Luna-windows-x64.zip`, the site uses the public
-GitHub API to point directly to it and show its actual version and size. A missing release is
-identified honestly; API failures keep the ordinary Releases link. No GitHub token is used.
+The primary download uses the latest public GitHub release's Luna EXE installer. A secondary link uses
+that same release's portable ZIP. Missing assets keep links to GitHub Releases and are described
+honestly; network/API failures retain useful release-page links. No GitHub token is used.
 
 The maintainer can upload a packaged Windows ZIP to a GitHub Release. Native editor build sources
 are not included in this website-only repository. Do not commit executable ZIPs into this website folder.

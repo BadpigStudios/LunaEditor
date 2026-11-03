@@ -54,7 +54,7 @@
           </h1>
           <p>A creative space for video, sound, and everything in between. Meet Luna, your native Windows video editor.</p>
           <div class="hero-actions">
-            <a class="button primary" href="https://github.com/BadpigStudios/LunaEditor/releases/download/alpha/Luna-0.26.0-alpha-windows-x64-setup.exe">
+            <a class="button primary" id="hero-download" href="https://github.com/BadpigStudios/LunaEditor/releases/latest">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>
               </svg>Get Luna for Windows</a>
@@ -197,8 +197,8 @@
         <div class="steps">
           <article>
             <span>01</span>
-            <h3>Unpack your workspace.</h3>
-            <p>Download the Windows x64 exe installer and click install.</p>
+            <h3>Install your workspace.</h3>
+            <p>Run the Windows x64 installer. Prefer a portable copy? Download the ZIP and extract its whole folder.</p>
           </article>
           <article>
             <span>02</span>
@@ -208,7 +208,7 @@
           <article>
             <span>03</span>
             <h3>Find your own orbit.</h3>
-            <p>Arrange your clips, explore the tools, and export. Existing <code>.luma</code> projects open in Luna too.</p>
+            <p>Arrange your clips, explore the tools, and export. Save your work as <code>.luna</code>. Older <code>.luma</code> projects still open.</p>
           </article>
         </div>
       </section>
@@ -223,9 +223,10 @@
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/>
           </svg>
-          <span id="download-label">View Windows releases</span>
+          <span id="download-label">Get the latest installer</span>
         </a>
-        <p class="release-status" id="release-status" role="status">Find the portable Windows build on GitHub Releases.</p>
+        <a class="small-link" id="portable-download" href="https://github.com/BadpigStudios/LunaEditor/releases/latest">Portable ZIP releases ↗</a>
+        <p class="release-status" id="release-status" role="status">Get the Windows installer, or choose the portable ZIP below.</p>
         <a class="small-link" href="https://github.com/BadpigStudios/LunaEditor">Follow development on GitHub <span aria-hidden="true">↗</span>
         </a>
       </section>
@@ -242,7 +243,7 @@
           </details>
           <details>
             <summary>Can I keep my existing Luma projects?</summary>
-            <p>Yes. Luna is the new name for Luma. Existing .luma projects and customized preferences remain compatible. The old default palette moves to the new lunar theme.</p>
+            <p>Yes. Luna is the new name for Luma. Older .luma projects still open; Save and Save As write .luna files. Customized preferences remain compatible. The old default palette moves to the new lunar theme.</p>
           </details>
           <details>
             <summary>Does Luna include music tools?</summary>

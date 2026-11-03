@@ -72,7 +72,7 @@ async function loadRelease() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
   try {
-    const response = await fetch("https://api.github.com/repos/BadpigStudios/LunaEditor/releases/latest", {
+    const response = await fetch("https://api.github.com/repos/BadpigStudios/LunaEditor/releases?per_page=20", {
       headers: { Accept: "application/vnd.github+json" }, signal: controller.signal
     });
     if (response.status === 404) {
@@ -80,14 +80,34 @@ async function loadRelease() {
       return;
     }
     if (!response.ok) return;
-    const release = await response.json();
-    const asset = (release.assets || []).find(item => /^Luna(?:-[\d.]+)?-windows-x64\.zip$/i.test(item.name));
-    const url = asset && new URL(asset.browser_download_url);
-    if (!url || url.protocol !== "https:" || url.hostname !== "github.com" ||
-        !url.pathname.startsWith("/BadpigStudios/LunaEditor/releases/download/")) return;
-    document.querySelector("#download-button").href = url.href;
-    document.querySelector("#download-label").textContent = "Download Luna for Windows";
-    status.textContent = `${release.tag_name} · Windows x64 · ZIP · ${(asset.size / 1048576).toFixed(1)} MB`;
+    const published = await response.json();
+    const release = Array.isArray(published) ? published.filter(item => !item.draft).sort((a, b) => Date.parse(b.published_at || b.created_at) - Date.parse(a.published_at || a.created_at))[0] : published;
+    if (!release) { status.textContent = "No public Windows release is available yet."; return; }
+    const assets = release.assets || [];
+    function downloadUrl(asset) {
+      if (!asset) return null;
+      try {
+        const url = new URL(asset.browser_download_url);
+        return url.protocol === "https:" && url.hostname === "github.com" &&
+          url.pathname.startsWith("/BadpigStudios/LunaEditor/releases/download/") ? url.href : null;
+      } catch { return null; }
+    }
+    const installer = assets.find(item => /\.exe$/i.test(item.name) && /luna/i.test(item.name));
+    const portable = assets.find(item => /\.zip$/i.test(item.name) && /luna/i.test(item.name));
+    const installerUrl = downloadUrl(installer);
+    const portableUrl = downloadUrl(portable);
+    if (installerUrl) {
+      document.querySelector("#download-button").href = installerUrl;
+      document.querySelector("#hero-download").href = installerUrl;
+      document.querySelector("#download-label").textContent = "Download Luna installer";
+      status.textContent = `${release.tag_name} · Windows x64 · EXE installer · ${(installer.size / 1048576).toFixed(1)} MB`;
+    } else {
+      status.textContent = "No Windows installer in the latest release. Browse releases or use the portable ZIP.";
+    }
+    if (portableUrl) {
+      document.querySelector("#portable-download").href = portableUrl;
+      document.querySelector("#portable-download").textContent = "Download portable ZIP";
+    }
     if (/^v?\d+\.\d+\.\d+$/.test(release.tag_name)) {
       document.querySelectorAll("[data-version]").forEach(item => { item.textContent = release.tag_name.replace(/^v/, ""); });
     }
