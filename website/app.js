@@ -108,9 +108,9 @@ async function loadRelease() {
       document.querySelector("#portable-download").href = portableUrl;
       document.querySelector("#portable-download").textContent = "Download portable ZIP";
     }
-    if (/^v?\d+\.\d+\.\d+$/.test(release.tag_name)) {
-      document.querySelectorAll("[data-version]").forEach(item => { item.textContent = release.tag_name.replace(/^v/, ""); });
-    }
+    const installerVersion = installer?.name.match(/^Luna-(\d+\.\d+\.\d+)-windows-x64-setup\.exe$/i)?.[1];
+    const releaseVersion = installerVersion || (/^v?\d+\.\d+\.\d+$/.test(release.tag_name) ? release.tag_name.replace(/^v/, "") : null);
+    if (releaseVersion) document.querySelectorAll("[data-version]").forEach(item => { item.textContent = releaseVersion; });
   } catch {
     // Keep the ordinary Releases link when offline, rate-limited or on an unsupported browser.
   } finally {
