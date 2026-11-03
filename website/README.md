@@ -48,3 +48,7 @@ The native editor source/capture tools are kept separately; no user footage or p
 The public repository contains this website and its Pages workflow only. The native editor source,
 local Git history, settings, personal media, and binary builds are not part of website publication.
 The screenshots use original demo artwork generated for the site.
+
+## Editor guide
+
+`user-guide.html` is the searchable, keyboard-accessible manual linked from the homepage navigation, getting-started section and footer. It also works without JavaScript. The maintainer regenerates it from the separately maintained editor documentation; the public website repository contains only the rendered guide and its web assets.

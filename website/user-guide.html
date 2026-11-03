@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Learn Luna: your first edit, timeline tools, effects, keyframes, sequences, music, scripts and sequence-aware export.">
+  <link rel="canonical" href="https://badpigstudios.github.io/LunaEditor/user-guide.html">
+  <title>Luna user guide — From first edit to export</title>
+  <link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="guide.css">
+</head>
+<body>
+  <a class="skip-link" href="#guide-content">Skip to guide</a>
+  <header class="header guide-header">
+    <a class="wordmark" href="index.html" aria-label="Luna home"><img src="assets/luna.svg" width="37" height="37" alt=""><span>luna</span></a>
+    <nav aria-label="Guide navigation"><a href="index.html">Editor</a><a href="#your-first-edit">Quick start</a><a href="#export">Export</a></nav>
+    <a class="nav-github" href="https://badpigstudios.github.io/LunaEditor/#download">Get Luna ↗</a>
+  </header>
+  <div class="guide-hero"><span class="eyebrow">LEARN AT YOUR OWN PACE · LUNA 0.26.1</span><h1>Luna user guide</h1><p>Learn the editor by making a short video, then explore the tools as you need them. This guide covers Luna 0.26.1. Menu names describe the current editor; shortcuts below are defaults and can be customized.</p></div>
+  <div class="guide-layout">
+    <aside class="guide-sidebar"><h2>In this guide</h2><nav aria-label="Guide contents"><a href="#your-first-edit" data-guide-link>Your first edit</a>
+<a href="#install-and-save" data-guide-link>Install and save</a>
+<a href="#workspace" data-guide-link>Workspace</a>
+<a href="#import-and-organize-media" data-guide-link>Import and organize media</a>
+<a href="#edit-the-timeline" data-guide-link>Edit the timeline</a>
+<a href="#preview-and-audio-levels" data-guide-link>Preview and audio levels</a>
+<a href="#effects-and-titles" data-guide-link>Effects and titles</a>
+<a href="#keyframes" data-guide-link>Keyframes</a>
+<a href="#sequences" data-guide-link>Sequences</a>
+<a href="#music" data-guide-link>Music</a>
+<a href="#custom-effects-and-automation" data-guide-link>Custom effects and automation</a>
+<a href="#export" data-guide-link>Export</a>
+<a href="#keyboard-shortcuts" data-guide-link>Keyboard shortcuts</a>
+<a href="#common-problems" data-guide-link>Common problems</a></nav></aside>
+    <main id="guide-content">
+      <form class="guide-search" role="search" onsubmit="return false">
+        <label for="guide-search">Find a topic</label>
+        <div class="guide-search-row"><input id="guide-search" type="search" placeholder="Try sequences, keyframes, SoundFont…" autocomplete="off"><button id="guide-clear" type="button" disabled>Clear</button></div>
+        <span id="guide-results" role="status" aria-live="polite"></span>
+      </form>
+      <p id="guide-empty" hidden>No matching section. Try another word or clear the search.</p>
+      <section class="guide-section" id="your-first-edit"><h2>Your first edit</h2>
+<ol>
+<li>Open Luna and choose <strong>New project</strong>. The editor opens after you create or open a project.</li>
+<li>Open <strong>Project &gt; Project options</strong>. Choose the canvas size and frame rate for your video. Save the project with <strong>Ctrl+S</strong> as a <code>.luna</code> file.</li>
+<li>Choose <strong>File &gt; Import media</strong> or press <strong>Ctrl+I</strong>. Pick your videos, audio, and images. Wait for their loading circles to finish before dragging them.</li>
+<li>Drag a visual item onto a visual track. Put music or other audio on an audio track. Drag a clip&#x27;s body to position it; drag either edge to trim it.</li>
+<li>Move the playhead using the <strong>timeline ruler</strong>, then press <strong>Space</strong> to preview. Select a clip to adjust its properties in the Inspector.</li>
+<li>Choose <strong>File &gt; Export media</strong> or <strong>Ctrl+E</strong>. Check the <strong>Sequence</strong> name, choose your output settings, continue, and choose an output file.</li>
+</ol>
+<p><strong>Save and export do different jobs.</strong> A <code>.luna</code> project stores your editing decisions and source references. Export creates the video or audio file you can share. Keep your original source files available when reopening a project.</p>
+</section><section class="guide-section" id="install-and-save"><h2>Install and save</h2>
+<p>The Windows x64 installer defaults to <code>Program Files\Highpok Team\Luna Editor</code> and requests administrator permission. Start Luna from its shortcut. Each Windows user&#x27;s installed preferences and recent-project history live under <code>%LOCALAPPDATA%\Luna</code>.</p>
+<p>For the portable version, extract the entire ZIP and open <code>Luna.exe</code>. Keep its <code>codecs</code>, <code>soundfonts</code>, and <code>instruments</code> folders together. Put the portable folder somewhere writable so Luna can remember preferences. Windows N editions need Microsoft&#x27;s Media Feature Pack.</p>
+<p>Use <strong>Ctrl+S</strong> regularly. Older <code>.luma</code> projects still open; their first Save offers a <code>.luna</code> destination, preserving the older file. Save As can create another project copy. Saving a project does not copy all its source media into the project file.</p>
+<p>Automatic backups are configured in <strong>Edit &gt; Recovery and library preferences</strong>. The startup project menu offers <strong>Recover a backup</strong>. Recover a useful version, inspect it, and save it with a clear name before continuing.</p>
+</section><section class="guide-section" id="workspace"><h2>Workspace</h2>
+<ul>
+<li><strong>Media</strong> holds imported video, audio, and images. The thumbnail-size slider changes the gallery density. Double-click a ready source to inspect it before placing it.</li>
+<li><strong>Effects</strong> holds bundled transitions, titles, visual effects, stickers, and audio effects. These generated items do not clutter the Media library.</li>
+<li><strong>Music</strong> provides the pattern creator and piano roll.</li>
+<li><strong>Preview</strong> shows the active sequence or an independently opened source. Resolution and zoom are separate controls: resolution affects preview work, while zoom changes your viewing size.</li>
+<li><strong>Inspector</strong> edits the selected clip. Its available controls depend on that clip&#x27;s type. With multiple clips selected, it edits the active item.</li>
+<li><strong>Timeline</strong> arranges clips on tracks. Sequence tabs at the bottom switch between timelines in the same project.</li>
+</ul>
+<p>Drag panel dividers to resize the workspace. Use <strong>View &gt; Appearance</strong> for themes, <strong>Edit &gt; Keyboard shortcuts</strong> for key bindings, and <strong>Edit &gt; Preferences</strong> for other defaults. <strong>View &gt; Reset workspace sizes</strong> restores panel dimensions.</p><figure><img src="assets/workspace.webp" width="1440" height="960" loading="lazy" alt="The Media panel, preview, Inspector and timeline in Luna."><figcaption>The Media panel, preview, Inspector and timeline in Luna.</figcaption></figure>
+</section><section class="guide-section" id="import-and-organize-media"><h2>Import and organize media</h2>
+<p>Import one file, several files, or a folder. A loading circle means Luna is still preparing the source. Loading media cannot be dragged onto the timeline. An unavailable source needs attention rather than more waiting.</p>
+<p>Search the library and use its filters, bins, ratings, or smart bins to organize larger projects. <strong>Project &gt; Smart bins</strong> manages saved filters. Double-click a source to open the source viewer; use <strong>I</strong> and <strong>O</strong> to mark its range there before using it in an edit.</p>
+<p>If you moved or renamed source files, use the media context menu to relink a source, or <strong>Tools &gt; Locate missing media in folder</strong>. Relinking points the project to the source&#x27;s current location. It does not undo your file move.</p>
+<p>Video clips may contain audio. Use <strong>Detach audio</strong> from a video clip&#x27;s context menu when you want a separate audio clip to edit independently.</p>
+</section><section class="guide-section" id="edit-the-timeline"><h2>Edit the timeline</h2>
+<p>Visual tracks accept video, images, titles, stickers, and visual effects. Audio tracks accept audio, music, and audio effects. Track types constrain where you can drop a clip. Same-track clips cannot overlap; use another compatible lane for layers that need to play together.</p>
+<ol>
+<li>Drag a clip&#x27;s body to move it. The held drag shows where the clip will land. Snapping helps align clip edges and other timeline points.</li>
+<li>Drag the left or right edge to trim or extend it within source and neighboring-clip limits. Use the Inspector for exact position, duration, speed, or stretch values when supported.</li>
+<li>Place the playhead on the ruler and press <strong>Ctrl+B</strong> to split a selected clip. The Razor tool is another way to make cuts.</li>
+<li>Use <strong>Ctrl-click</strong> to toggle clips in a selection, <strong>Shift-click</strong> to add, or drag a selection box from empty timeline space. Drag a selected clip body to move the selected group together.</li>
+<li>Use the Timeline menu, toolbar, or right-click menu for ripple edits, slip edits, closing gaps, duplication, and other editing operations. <strong>Ctrl+Z</strong> undoes an edit.</li>
+</ol>
+<p>Clicking empty timeline space deselects items; it does not seek. Use the ruler to move the playhead. Middle-drag pans the timeline. Shift+wheel scrolls time, Ctrl+wheel zooms, and the wheel scrolls tracks. Use the track controls to manage targeting, locking, muting, and sync behavior.</p>
+</section><section class="guide-section" id="preview-and-audio-levels"><h2>Preview and audio levels</h2>
+<p>Press <strong>Space</strong> to play or pause, and use the transport controls to step or jump through the edit. The preview resolution dropdown lets you reduce the display workload without changing the exported resolution. Preview zoom changes only how large you see the picture.</p>
+<p>Select a visual clip to use its preview transform handles. Move or scale with <strong>Transform</strong>, or use <strong>Warp</strong> for corner adjustments. Preview snapping can help with alignment. The Inspector provides exact values for supported transforms.</p>
+<p>The vertical monitor-volume slider and preview mute affect listening only. They do not change export loudness. Clip volume and project volume affect the rendered mix. Watch the green/yellow/red meter and adjust the mix rather than relying on a quieter monitor setting to prevent clipping.</p>
+<p>For demanding footage or effects, try a lower preview resolution, proxies, or the graphics/cache options. Proxy and graphics preferences control the trade-off between preview workload, preparation time, storage, and quality. Export uses full-resolution sources rather than preview proxies. Hardware acceleration depends on your PC, media, and selected encoder.</p>
+</section><section class="guide-section" id="effects-and-titles"><h2>Effects and titles</h2>
+<p>Open the <strong>Effects</strong> tab and choose a category. Drag a preset toward the timeline and follow the placement preview before releasing it. Visual and audio effects use compatible tracks; select an effect to adjust its parameters and scope in the Inspector.</p>
+<p>Transitions attach to a clip edge or a cut between clips. They are not standalone timeline clips. Drop a transition near the intended edge/cut, select the transition overlay, and adjust its duration and settings. A cut between two sources needs suitable source handles for the transition.</p>
+<p>Add a title preset, select its clip, and edit the text in the Inspector. <strong>Tools &gt; Title text and style</strong> opens the extended typography and styling controls, including font, alignment, colors, outlines, shadows, gradients, glow, and depth options. Review readability in the preview at the intended output size.</p>
+<p>Stickers can be static or animated. Select their clips to use the supported appearance and timing controls. Right-click items to discover actions relevant to the current selection.</p><figure><img src="assets/effects.webp" width="1440" height="960" loading="lazy" alt="The bundled effects and transitions library."><figcaption>The bundled effects and transitions library.</figcaption></figure>
+</section><section class="guide-section" id="keyframes"><h2>Keyframes</h2>
+<p>A keyframe stores a property value at a particular time. For example, two opacity keys can fade a title in, and position keys can move it across the screen.</p>
+<ol>
+<li>Select a clip. Use its bottom <strong>diamond dropdown</strong> to choose the property shown in its keyframe lane.</li>
+<li>Put the playhead at the desired time using the ruler. Press <strong>K</strong>, use <strong>◇ Key</strong>, or click the Inspector property&#x27;s diamond to add a key.</li>
+<li>Change the property value. Move the playhead to a later time and create another key with a different value. Starting animation after the beginning adds an initial anchor to preserve the earlier appearance.</li>
+<li>Preview the result. Drag a visible diamond to retime it. Select a key to edit its value, or right-click it for easing and advanced curve controls.</li>
+</ol>
+<p><strong>Auto-key</strong> records supported Inspector changes as keys. With Auto-key off, existing animated channels remain editable. Selecting a diamond focuses that key&#x27;s property/time; clicking the ruler returns editing to the playhead. Delete removes a selected key. Variables, triggers, and effect controllers can drive a property instead of ordinary direct edits.</p><figure><img src="assets/keyframes.webp" width="1440" height="960" loading="lazy" alt="Property keyframes directly on a timeline clip."><figcaption>Property keyframes directly on a timeline clip.</figcaption></figure>
+</section><section class="guide-section" id="sequences"><h2>Sequences</h2>
+<p>A sequence is a separate timeline inside one project. Keep a <strong>Full edit</strong>, <strong>Trailer</strong>, and <strong>Alternate cut</strong> together without putting every version onto one timeline.</p>
+<p>Use the bottom sequence tabs to switch timelines, the <strong>+</strong> button to create one, or <strong>Project &gt; Sequences</strong> to manage, duplicate, rename, or delete them. Duplicate the active sequence when you want a starting point for a different cut; create an empty sequence when you want a fresh arrangement.</p>
+<p>Each sequence has its own tracks, clips, markers, actions/triggers, and timeline duration. Imported media and global variables are shared. Canvas resolution, project frame rate, and other project-wide settings are also shared; use another project when you need an independent canvas configuration.</p>
+<p><strong>Export renders the currently active sequence only.</strong> Check the persistent <strong>Sequence</strong> field in the export window before continuing. To export a different sequence, cancel, switch to that sequence, and open export again. Sequences are not currently nestable as clips inside another sequence.</p>
+</section><section class="guide-section" id="music"><h2>Music</h2>
+<ol>
+<li>Open <strong>Music</strong> and choose <strong>New pattern</strong>. Enter a name, tempo, number of bars, instrument, and optional starter pattern.</li>
+<li>Choose <strong>Create pattern</strong>. A music clip is added to a compatible audio lane, and the piano roll opens.</li>
+<li>Use <strong>Draw</strong> to place and move notes, <strong>Paint</strong> to sweep a rhythm, or <strong>Erase</strong>/right-drag to remove notes. Choose note length, grid snap, velocity, and a chord stamp in the toolbar.</li>
+<li>Drag note bodies to change time/pitch, drag their right edges to change length, and drag stems in the lower velocity lane to change note strength. Ctrl-click and Ctrl-drag help select notes.</li>
+<li>Use <strong>Pattern</strong> to audition the music clip. Clicking the piano keyboard auditions individual notes. Return to video preview to hear the music in the edit.</li>
+</ol>
+<p>Bundled keys, drums, textures, and synth instruments work immediately. <strong>Load SF2 / WAV pack</strong> accepts SoundFont 2 or supported WAV packs. You can load a file before creating the pattern and select its preset, or replace the instrument on an existing pattern. <strong>Tempo / instrument / advanced notes</strong> offers detailed settings and a bulk note list. MIDI import brings in notes; choose the sound you want to play them.</p>
+<p>Keyboard commands depend on focus: Ctrl+A/C/V, Ctrl+D, Delete, and arrow keys operate on notes when the piano roll has focus. Click the timeline when you want timeline commands again. Custom instrument paths are referenced by the project; keep those files available.</p><figure><img src="assets/music.webp" width="1440" height="960" loading="lazy" alt="The piano roll with notes and a velocity lane."><figcaption>The piano roll with notes and a velocity lane.</figcaption></figure>
+</section><section class="guide-section" id="custom-effects-and-automation"><h2>Custom effects and automation</h2>
+<p>Use <strong>Tools &gt; Effect builder (visual / code)</strong> to create a custom effect for a compatible selected item. The visual editor is the initial view. Drag useful blocks into its canvas, connect compatible sockets, and edit their parameters. Switch to the code editor when you prefer typed scripts, completion previews, and debug output.</p>
+<p>Start with a small change and preview it before adding more processing. The scripting language is a restricted, typed effect language, not unrestricted Java or a system shell. The visual graph and code controls are tools for custom effects, not a way to run arbitrary external programs.</p>
+<p><strong>Project &gt; Global variables</strong> manages typed values shared by the project. <strong>Timeline triggers</strong> are selectable blocks that apply actions without a media clip. A trigger may target a variable, a clip property, or a project property, and can have duration and easing. Keep track of controllers: a driven property may need its variable, trigger, or effect changed instead of direct editing.</p>
+</section><section class="guide-section" id="export"><h2>Export</h2>
+<ol>
+<li>Switch to the sequence you want to deliver and preview its beginning, important cuts, and ending.</li>
+<li>Choose <strong>File &gt; Export media</strong> or <strong>Ctrl+E</strong>. The <strong>Sequence</strong> field stays visible on every tab. It names the timeline that will actually render.</li>
+<li>In <strong>Picture</strong>, choose a format and set dimensions, frame rate, quality/bitrate, and speed options. Keep the output size and frame rate aligned with your intended delivery.</li>
+<li>In <strong>Audio</strong>, choose whether to include audio and set bitrate, sample rate, channels, and supported lossless bit depth. Choose an audio-only container when exporting only sound.</li>
+<li>In <strong>Range</strong>, set begin/end times if you need part of the sequence. End <code>0</code> means the full duration. <strong>Encoder</strong> and <strong>Acceleration</strong> provide codec and hardware options; unsupported combinations may need another setting or software encoding.</li>
+<li>Continue to the output browser. The suggested filename includes the project and sequence names. Choose a new output file and let the export finish, then check the exported media.</li>
+</ol>
+<p>The selected sequence&#x27;s effects, titles, automation, and mix are rendered. Monitor volume and preview zoom/resolution do not set output volume, size, or quality. Lowering preview quality is a preview convenience, not a way to lower the final export. Keep source media and project files separate from the output destination.</p>
+</section><section class="guide-section" id="keyboard-shortcuts"><h2>Keyboard shortcuts</h2>
+<p>These are the defaults. <strong>Edit &gt; Keyboard shortcuts</strong> shows the current bindings and lets you search commands, resolve conflicts, and save a shortcut profile.</p>
+<div class="guide-table"><table><thead><tr>
+<th scope="col">Action</th>
+<th scope="col">Default shortcut</th>
+</tr></thead><tbody>
+<tr><td>New / Open project</td><td>Ctrl+N / Ctrl+O</td></tr>
+<tr><td>Save / Save As</td><td>Ctrl+S / Ctrl+Shift+S</td></tr>
+<tr><td>Import / Export</td><td>Ctrl+I / Ctrl+E</td></tr>
+<tr><td>Play or pause</td><td>Space</td></tr>
+<tr><td>Undo / Redo</td><td>Ctrl+Z / Ctrl+Y</td></tr>
+<tr><td>Split selected clip</td><td>Ctrl+B</td></tr>
+<tr><td>Duplicate selection</td><td>Ctrl+D</td></tr>
+<tr><td>Select / Razor tool</td><td>V / C</td></tr>
+<tr><td>Add clip keyframe</td><td>K</td></tr>
+<tr><td>Select / Deselect timeline items</td><td>Ctrl+A / Ctrl+Shift+A</td></tr>
+<tr><td>Previous / next cut</td><td>Ctrl+Left / Ctrl+Right</td></tr>
+<tr><td>Source In / Out</td><td>I / O in the source viewer</td></tr>
+<tr><td>Match frame</td><td>F</td></tr>
+</tbody></table></div>
+</section><section class="guide-section" id="common-problems"><h2>Common problems</h2>
+<ul>
+<li><strong>A clip will not drag:</strong> let its loading circle finish; check that the destination track accepts that clip type and is unlocked. Same-track clips need free space.</li>
+<li><strong>Media is unavailable:</strong> locate/relink the original file or folder. A saved project is not a self-contained archive of all source media.</li>
+<li><strong>The playhead will not move when clicking a lane:</strong> use the timeline ruler. Empty lane clicks are for deselecting or starting a selection box.</li>
+<li><strong>The wrong edit exported:</strong> check which sequence tab was active and inspect the export window&#x27;s Sequence field. Cancel and switch sequences before exporting again.</li>
+<li><strong>Preview audio differs from export volume:</strong> monitor gain/mute affect listening only. Adjust clip or project gain for the rendered mix.</li>
+<li><strong>Playback stutters:</strong> reduce preview resolution, inspect proxy/cache settings, and check the available graphics options. Heavy custom effects and high-resolution sources can still exceed a PC&#x27;s preview budget.</li>
+<li><strong>An instrument is silent:</strong> choose a supported instrument/preset, check notes, velocity and mute/volume, and keep the SF2/WAV pack files available. Try a bundled keys pattern to isolate custom-file issues.</li>
+<li><strong>A property will not edit normally:</strong> check whether it is controlled by keyframes, a variable, a trigger, or an effect. Also check track locks and whether the clip supports the property.</li>
+</ul>
+<p>If a problem persists, report it through <a href="https://github.com/BadpigStudios/LunaEditor/issues">GitHub Issues</a>. Include your Windows version, the action that caused it, and the error text. Share sample media or project content only when you intend it to be public.</p>
+</section>
+    </main>
+  </div>
+  <footer class="footer"><a class="wordmark" href="index.html">luna</a><p>Your next story starts with a first cut.</p><div><a href="#your-first-edit">Back to quick start ↑</a><a href="https://github.com/BadpigStudios/LunaEditor/issues">Report an issue ↗</a></div></footer>
+  <script src="guide.js" defer></script>
+</body>
+</html>

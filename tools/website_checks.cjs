@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
 const http = require("node:http");
 const path = require("node:path");
+const { pathToFileURL } = require("node:url");
 const { chromium } = require("playwright");
 
 const root = path.resolve(__dirname, "../website");
@@ -63,6 +64,37 @@ async function main() {
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Horizontal overflow at ${width}px: ${overflow.join(", ")}`);
       if (width === 375) await page.screenshot({ path: path.join(output, "luna-website-mobile.png"), fullPage: true });
     }
+    await page.getByRole("link", { name: "User guide", exact: true }).first().click();
+    assert.match(page.url(), /\/LunaEditor\/user-guide\.html$/);
+    await page.getByRole("heading", { name: "Luna user guide", exact: true }).waitFor();
+    assert.equal(await page.locator(".guide-section").count(), 14);
+    assert(await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].every(link => document.getElementById(link.hash.slice(1)))));
+    const search = page.locator("#guide-search");
+    await search.fill("SoundFont");
+    assert(await page.locator("#music").isVisible());
+    assert.equal(await page.locator("#your-first-edit").isVisible(), false);
+    assert.match(await page.locator("#guide-results").innerText(), /sections match/);
+    await search.fill("this topic cannot exist 12345");
+    assert(await page.locator("#guide-empty").isVisible());
+    await page.getByRole("link", { name: "Export", exact: true }).first().click();
+    await page.waitForFunction(() => !document.querySelector("#export").hidden);
+    assert.equal(await search.inputValue(), "");
+    assert.match(await page.locator("#export").innerText(), /Sequence.*every tab/s);
+    await search.fill("keyframes");
+    await search.press("Escape");
+    assert.equal(await page.locator(".guide-section:visible").count(), 14);
+    await search.fill("music");
+    await page.locator("#guide-clear").click();
+    assert.equal(await search.inputValue(), "");
+    await page.evaluate(async () => {
+      for (const image of document.images) { image.loading = "eager"; await image.decode(); }
+    });
+    for (const width of [320, 375, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
+      await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Guide overflow at ${width}px`);
+      if (width === 375 || width === 1440) await page.screenshot({ path: path.join(output, `luna-guide-${width}.png`) });
+    }
     await context.close();
 
     const release = await browser.newContext();
@@ -90,9 +122,27 @@ async function main() {
     await plain.goto(url, { waitUntil: "networkidle" });
     assert(await plain.locator("h1").isVisible());
     assert(await plain.locator("#download-button").isVisible());
+    await plain.goto(url + "user-guide.html", { waitUntil: "networkidle" });
+    assert.equal(await plain.locator(".guide-section:visible").count(), 14);
     await noScript.close();
+
+    // Only the private editor checkout includes the packaged, self-contained manual.
+    const localGuide = path.resolve(__dirname, "../docs/user-guide.html");
+    if (await fs.stat(localGuide).catch(() => null)) {
+      const manual = await browser.newContext({ offline: true });
+      const local = await manual.newPage();
+      local.on("pageerror", error => errors.push(error.message));
+      await local.goto(pathToFileURL(localGuide).href);
+      await local.locator("#guide-search").fill("sequences");
+      assert(await local.locator("#sequences").isVisible());
+      assert(await local.evaluate(async () => {
+        for (const image of document.images) { image.loading = "eager"; await image.decode(); }
+        return [...document.images].every(image => image.src.startsWith("data:"));
+      }));
+      await manual.close();
+    }
     assert.deepEqual(errors, []);
-    console.log("PASS: desktop/mobile layouts, no horizontal overflow, local assets under /LunaEditor/, keyboard tabs, FAQ, actual-release download, absent/offline release fallbacks, reduced motion, no-script content, and no browser errors.");
+    console.log("PASS: desktop/mobile layouts, local assets under /LunaEditor/, keyboard tabs, FAQ, release downloads/fallbacks, guide links/search/clear/anchors, 14 sections with no script, offline manual, and no browser errors.");
   } finally {
     await browser.close();
   }
