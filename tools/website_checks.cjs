@@ -68,6 +68,7 @@ async function main() {
     assert.match(page.url(), /\/LunaEditor\/user-guide\.html$/);
     await page.getByRole("heading", { name: "Luna user guide", exact: true }).waitFor();
     assert.equal(await page.locator(".guide-section").count(), 17);
+    assert.match(await page.locator(".guide-hero").innerText(), /LUNA 0\.26\.5/);
     assert(await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].every(link => document.getElementById(link.hash.slice(1)))));
     const search = page.locator("#guide-search");
     await search.fill("SoundFont");
