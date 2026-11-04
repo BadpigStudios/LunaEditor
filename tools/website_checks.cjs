@@ -154,6 +154,18 @@ async function main() {
     assert.match(await mixed.locator("#portable-download").getAttribute("href"), /v0\.26\.8.*\.zip$/);
     await platforms.close();
 
+    const installerOnly = await browser.newContext();
+    await installerOnly.route("https://api.github.com/**", route => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify([
+      { tag_name: "v0.26.8", published_at: "2026-11-03T00:00:00Z", assets: [windowsAssets[0],
+        { name: "Luna-0.26.8-windows-x64.zip.sha256", browser_download_url: "https://github.com/BadpigStudios/LunaEditor/releases/download/v0.26.8/Luna-0.26.8-windows-x64.zip.sha256" }] }
+    ]) }));
+    const partial = await installerOnly.newPage();
+    await partial.goto(url, { waitUntil: "networkidle" });
+    assert.match(await partial.locator("#download-button").getAttribute("href"), /\.exe$/);
+    assert.match(await partial.locator("#portable-download").innerText(), /unavailable.*browse releases/);
+    assert.equal(await partial.locator("#portable-download").getAttribute("href"), "https://github.com/BadpigStudios/LunaEditor/releases");
+    await installerOnly.close();
+
     const unsafe = await browser.newContext();
     await unsafe.route("https://api.github.com/**", route => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify([
       { tag_name: "v0.26.8", published_at: "2026-11-03T00:00:00Z", assets: windowsAssets.map(asset => ({ ...asset, browser_download_url: "https://example.com/fake.exe" })) }

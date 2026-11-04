@@ -115,6 +115,9 @@ async function loadRelease() {
     if (portableUrl) {
       document.querySelector("#portable-download").href = portableUrl;
       document.querySelector("#portable-download").textContent = "Download portable ZIP";
+    } else {
+      document.querySelector("#portable-download").href = "https://github.com/BadpigStudios/LunaEditor/releases";
+      document.querySelector("#portable-download").textContent = "Portable ZIP unavailable · browse releases ↗";
     }
     const installerVersion = installer?.name.match(/^Luna-(\d+\.\d+\.\d+)-windows-x64-setup\.exe$/i)?.[1];
     const releaseVersion = installerVersion || (/^v?\d+\.\d+\.\d+$/.test(release.tag_name) ? release.tag_name.replace(/^v/, "") : null);
