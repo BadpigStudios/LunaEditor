@@ -52,3 +52,9 @@ The screenshots use original demo artwork generated for the site.
 ## Editor guide
 
 `user-guide.html` is the searchable, keyboard-accessible manual linked from the homepage navigation, getting-started section and footer. It also works without JavaScript. The maintainer regenerates it from the separately maintained editor documentation; the public website repository contains only the rendered guide and its web assets.
+
+## Platform roadmap and visual design
+
+The homepage now presents the real editor before decorative artwork, with responsive tool cards, a persistent download action, a guide callout and clear platform availability. `platforms.html` is a public planning overview: Linux is **experimental-alpha · planned**, Android is **planned**, and neither has a download. Technical architecture/acceptance plans stay in the separate editor documentation. Windows installer/ZIP links select the latest public release containing Windows x64 assets, so a future Linux-only prerelease cannot replace them.
+
+The site and guide remain functional without JavaScript. Browser checks cover homepage, guide and roadmap at 320–1440 px, keyboard interactions, API/offline/missing/unsafe assets, and mixed-platform release metadata. No desktop version bump or native rebuild is needed for this website/documentation change.

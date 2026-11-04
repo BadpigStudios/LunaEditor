@@ -79,26 +79,34 @@ async function loadRelease() {
       status.textContent = "A public Windows release hasn’t been published yet. Follow the project on GitHub.";
       return;
     }
-    if (!response.ok) return;
+    if (!response.ok) {
+      status.textContent = "Couldn’t check the latest release. Browse GitHub Releases to download Luna.";
+      return;
+    }
     const published = await response.json();
-    const release = Array.isArray(published) ? published.filter(item => !item.draft).sort((a, b) => Date.parse(b.published_at || b.created_at) - Date.parse(a.published_at || a.created_at))[0] : published;
+    const installerName = /^Luna-(\d+\.\d+\.\d+)-windows-x64-setup\.exe$/i;
+    const portableName = /^Luna-(\d+\.\d+\.\d+)-windows-x64\.zip$/i;
+    const windowsAsset = asset => typeof asset?.name === "string" && (installerName.test(asset.name) || portableName.test(asset.name));
+    const releases = (Array.isArray(published) ? published : [published]).filter(item => item && !item.draft);
+    // A future Linux/Android release must not replace the Windows download.
+    const release = releases.sort((a, b) => Date.parse(b.published_at || b.created_at) - Date.parse(a.published_at || a.created_at))
+      .find(item => Array.isArray(item.assets) && item.assets.some(windowsAsset));
     if (!release) { status.textContent = "No public Windows release is available yet."; return; }
     const assets = release.assets || [];
     function downloadUrl(asset) {
       if (!asset) return null;
       try {
         const url = new URL(asset.browser_download_url);
-        return url.protocol === "https:" && url.hostname === "github.com" &&
+        return url.protocol === "https:" && url.hostname === "github.com" && !url.port && !url.username && !url.password &&
           url.pathname.startsWith("/BadpigStudios/LunaEditor/releases/download/") ? url.href : null;
       } catch { return null; }
     }
-    const installer = assets.find(item => /\.exe$/i.test(item.name) && /luna/i.test(item.name));
-    const portable = assets.find(item => /\.zip$/i.test(item.name) && /luna/i.test(item.name));
+    const installer = assets.find(item => installerName.test(item.name));
+    const portable = assets.find(item => portableName.test(item.name));
     const installerUrl = downloadUrl(installer);
     const portableUrl = downloadUrl(portable);
     if (installerUrl) {
-      document.querySelector("#download-button").href = installerUrl;
-      document.querySelector("#hero-download").href = installerUrl;
+      document.querySelectorAll("[data-installer-link]").forEach(link => { link.href = installerUrl; });
       document.querySelector("#download-label").textContent = "Download Luna installer";
       status.textContent = `${release.tag_name} · Windows x64 · EXE installer · ${(installer.size / 1048576).toFixed(1)} MB`;
     } else {
@@ -112,7 +120,8 @@ async function loadRelease() {
     const releaseVersion = installerVersion || (/^v?\d+\.\d+\.\d+$/.test(release.tag_name) ? release.tag_name.replace(/^v/, "") : null);
     if (releaseVersion) document.querySelectorAll("[data-version]").forEach(item => { item.textContent = releaseVersion; });
   } catch {
-    // Keep the ordinary Releases link when offline, rate-limited or on an unsupported browser.
+    status.textContent = "Couldn’t check the latest release. Browse GitHub Releases to download Luna.";
+    // Keep the ordinary Releases links when offline or rate-limited.
   } finally {
     clearTimeout(timeout);
   }

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Luna's proposed platform roadmap: Windows available now, Linux planned as an experimental alpha, and Android planned for phones and tablets. No port releases yet.">
+  <link rel="canonical" href="https://badpigstudios.github.io/LunaEditor/platforms.html">
+  <link rel="icon" type="image/svg+xml" href="assets/luna.svg"><link rel="stylesheet" href="styles.css">
+  <title>Luna platform roadmap — Linux &amp; Android plans</title>
+</head>
+<body class="roadmap">
+  <a class="skip-link" href="#main">Skip to content</a>
+    <header class="header">
+      <a class="wordmark" href="index.html" aria-label="Luna home">
+        <img src="assets/luna.svg" alt="" width="37" height="37">
+        <span>luna</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html#workspace">Workspace</a>
+        <a href="index.html#tools">Tools</a>
+        <a href="index.html#platforms">Platforms</a>
+        <a href="user-guide.html">User guide</a>
+      </nav>
+      <a class="nav-github" href="https://github.com/BadpigStudios/LunaEditor" aria-label="Luna project on GitHub">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.58 9.58 0 0 1 12 6.83c.85 0 1.71.11 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/>
+        </svg>
+        <span>GitHub</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+      <a class="button primary nav-download" href="index.html#download">Download <span aria-hidden="true">↓</span></a>
+    </header>
+  <main id="main">
+    <section class="roadmap-hero" aria-labelledby="roadmap-title">
+      <span class="eyebrow">THE PLATFORM ROADMAP</span>
+      <h1 id="roadmap-title">More places.<br>The same creative spirit.</h1>
+      <p>Windows is Luna's available desktop version. The next proposed step is a Linux experimental alpha, followed by a touch-first Android experience, sharing the same editing foundations.</p>
+      <p class="roadmap-notice"><strong>Planning only.</strong> Neither port has entered development. No Linux or Android builds are available, and no release dates are assigned.</p>
+      <nav class="roadmap-nav" aria-label="Platform plans"><a class="button secondary" href="#linux">Linux plan ↓</a><a class="button secondary" href="#android">Android plan ↓</a><a class="button secondary" href="index.html#download">Get Luna for Windows ↗</a></nav>
+    </section>
+    <section class="roadmap-section" aria-labelledby="availability-title">
+      <h2 id="availability-title">Where things stand.</h2>
+      <div class="roadmap-table"><table><thead><tr><th scope="col">Platform</th><th scope="col">Status</th><th scope="col">Proposed first target</th></tr></thead><tbody>
+        <tr><th scope="row">Windows</th><td>Available now</td><td>Windows 10 / 11 · x64</td></tr>
+        <tr><th scope="row">Linux</th><td>Experimental-alpha · planned</td><td>Desktop · x86_64</td></tr>
+        <tr><th scope="row">Android</th><td>Planned</td><td>ARM64 phones and tablets</td></tr>
+      </tbody></table></div>
+    </section>
+    <section class="roadmap-section" id="linux" aria-labelledby="linux-title">
+      <span class="eyebrow">EXPERIMENTAL-ALPHA · PLANNED</span><h2 id="linux-title">Linux, one working edit at a time.</h2>
+      <p>Start with a focused desktop workflow, then expand only after preview, project compatibility and export are reliable. The experimental-alpha label will remain explicit throughout the initial Linux releases.</p>
+      <div class="roadmap-columns"><div><h3>Proposed first scope</h3><ul>
+        <li>Import video, audio and images; arrange visual and audio tracks.</li>
+        <li>Trim, split, move, undo and save <strong>.luna</strong> projects.</li>
+        <li>Basic transforms, keyframes, titles, captions and transitions.</li>
+        <li>Synchronized preview and a small set of tested video/audio export formats.</li>
+      </ul></div><div><h3>Before a downloadable alpha</h3><ul>
+        <li>Validate on an Ubuntu LTS x86_64 baseline, with Wayland and X11 sessions.</li>
+        <li>Test file access, recovery, audio devices, scaling and graphics fallback.</li>
+        <li>Publish a clear supported-feature list and known limitations.</li>
+        <li>Preserve unsupported project data and explain export limitations.</li>
+      </ul></div></div>
+    </section>
+    <section class="roadmap-section" id="android" aria-labelledby="android-title">
+      <span class="eyebrow">PLANNED</span><h2 id="android-title">Android, designed for your hands.</h2>
+      <p>A phone or tablet should feel like its own editing tool. The proposal pairs the shared C++ editing core with a native, adaptive Android interface, rather than shrinking the desktop window.</p>
+      <div class="roadmap-columns"><div><h3>Proposed first scope</h3><ul>
+        <li>Local video, audio and image import through Android's file picker.</li>
+        <li>Touch-friendly timeline selection, trim, split and move controls.</li>
+        <li>Basic transforms, keyframes, audio gain and reliable preview.</li>
+        <li>MP4 export with progress, cancellation and clear device capability limits.</li>
+      </ul></div><div><h3>Before a mobile release</h3><ul>
+        <li>Test real ARM64 phones and tablets, with adaptable layouts.</li>
+        <li>Handle storage permissions, rotation and interrupted app sessions.</li>
+        <li>Measure memory use, audio sync, battery use and sustained performance.</li>
+        <li>Decide distribution and signing before offering an APK or store listing.</li>
+      </ul></div></div>
+    </section>
+    <section class="roadmap-section" aria-labelledby="phases-title">
+      <span class="eyebrow">PROPOSED ORDER</span><h2 id="phases-title">Evidence before expansion.</h2>
+      <ol><li><strong>Shared foundations.</strong> Separate platform-specific UI, media, audio and file access from the reusable editing core. Keep Windows behavior covered by tests.</li>
+      <li><strong>Linux experimental alpha.</strong> Prove a small desktop edit-to-export workflow and document its limits.</li>
+      <li><strong>Android foundation.</strong> Prove media access, touch interaction and synchronized preview on physical devices.</li>
+      <li><strong>Broader compatibility.</strong> Expand effects and editing tools only after project round trips and rendering checks pass.</li></ol>
+      <p>Desktop feature parity is not promised for either first release. These are proposed milestones, not a delivery schedule.</p>
+      <nav class="roadmap-nav" aria-label="Roadmap next steps"><a class="button primary" href="index.html#download">Use Luna on Windows</a><a class="button secondary" href="https://github.com/BadpigStudios/LunaEditor">Follow the project ↗</a></nav>
+    </section>
+  </main>
+    <footer class="footer">
+      <a class="wordmark" href="index.html" aria-label="Luna home">
+        <img src="assets/luna.svg" width="31" height="31" alt="">
+        <span>luna</span>
+      </a>
+      <p>A little space to create.<br>
+        <span>By Badpig Studios.</span>
+      </p>
+      <div>
+        <a href="user-guide.html">User guide</a>
+        <a href="platforms.html">Platform roadmap</a>
+        <a href="https://github.com/BadpigStudios/LunaEditor">GitHub ↗</a>
+        <a href="https://github.com/BadpigStudios/LunaEditor/issues">Feedback ↗</a>
+        <a href="https://github.com/BadpigStudios/LunaEditor/blob/main/LICENSE">GPL-3.0 ↗</a>
+      </div>
+      <span class="footer-note">Available for Windows. Linux and Android are planned.</span>
+    </footer>
+</body>
+</html>

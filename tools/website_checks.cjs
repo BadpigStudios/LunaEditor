@@ -55,6 +55,10 @@ async function main() {
     await page.locator("h1").click();
     await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
     await page.screenshot({ path: path.join(output, "luna-website-desktop.png"), fullPage: true });
+    await page.screenshot({ path: path.join(output, "luna-website-hero.png") });
+    assert.equal(await page.locator(".platform-card").count(), 3);
+    assert.match(await page.locator(".platform-card").nth(1).innerText(), /Experimental-alpha.*planned/s);
+    assert.match(await page.locator(".platform-card").nth(2).innerText(), /No Android build is available/);
     for (const width of [320, 375, 768, 1024]) {
       await page.setViewportSize({ width, height: 900 });
       const overflow = await page.evaluate(() => [...document.querySelectorAll("body *")].filter(item => {
@@ -62,13 +66,29 @@ async function main() {
         return bounds.right > innerWidth + 1 && getComputedStyle(item).position !== "absolute";
       }).slice(0, 8).map(item => `${item.tagName}.${item.className}: ${Math.round(item.getBoundingClientRect().right)}`));
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Horizontal overflow at ${width}px: ${overflow.join(", ")}`);
-      if (width === 375) await page.screenshot({ path: path.join(output, "luna-website-mobile.png"), fullPage: true });
+      if (width === 375) {
+        await page.screenshot({ path: path.join(output, "luna-website-mobile.png"), fullPage: true });
+        await page.screenshot({ path: path.join(output, "luna-website-mobile-hero.png") });
+      }
     }
+    await page.getByRole("link", { name: /Explore the Linux plan/ }).click();
+    await page.getByRole("heading", { name: "Linux, one working edit at a time." }).waitFor();
+    assert.match(await page.locator(".roadmap-notice").innerText(), /Neither port has entered development/);
+    assert.equal(await page.locator('a[href$=".apk"],a[href$=".flatpak"],a[href$=".AppImage"]').count(), 0);
+    for (const width of [320, 375, 768, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Roadmap overflow at ${width}px`);
+    }
+    // Open the unfragmented page for the hero capture after exercising #linux navigation.
+    await page.goto(url + "platforms.html", { waitUntil: "networkidle" });
+    assert(await page.locator("header .wordmark").isVisible());
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await page.screenshot({ path: path.join(output, "luna-platform-roadmap.png") });
     await page.getByRole("link", { name: "User guide", exact: true }).first().click();
     assert.match(page.url(), /\/LunaEditor\/user-guide\.html$/);
     await page.getByRole("heading", { name: "Luna user guide", exact: true }).waitFor();
     assert.equal(await page.locator(".guide-section").count(), 17);
-    assert.match(await page.locator(".guide-hero").innerText(), /LUNA 0\.26\.5/);
+    assert.match(await page.locator(".guide-hero").innerText(), /LUNA 0\.26\.8/);
     assert(await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].every(link => document.getElementById(link.hash.slice(1)))));
     const search = page.locator("#guide-search");
     await search.fill("SoundFont");
@@ -112,8 +132,36 @@ async function main() {
     assert.match(await released.locator("#release-status").innerText(), /EXE installer/);
     assert.match(await released.locator("#download-button").getAttribute("href"), /\.exe$/);
     assert.match(await released.locator("#portable-download").getAttribute("href"), /\.zip$/);
+    assert.equal(await released.locator("[data-installer-link]").count(), 3);
+    for (const link of await released.locator("[data-installer-link]").all())
+      assert.match(await link.getAttribute("href"), /Luna-0\.26\.0-windows-x64-setup\.exe$/);
     assert.equal(await released.locator("[data-version]").first().innerText(), "0.26.0");
     await release.close();
+
+    // A future Linux-only release must not hijack the Windows installer/ZIP.
+    const platforms = await browser.newContext();
+    const windowsAssets = [
+      { name: "Luna-0.26.8-windows-x64-setup.exe", size: 65000000, browser_download_url: "https://github.com/BadpigStudios/LunaEditor/releases/download/v0.26.8/Luna-0.26.8-windows-x64-setup.exe" },
+      { name: "Luna-0.26.8-windows-x64.zip", size: 86000000, browser_download_url: "https://github.com/BadpigStudios/LunaEditor/releases/download/v0.26.8/Luna-0.26.8-windows-x64.zip" }
+    ];
+    await platforms.route("https://api.github.com/**", route => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify([
+      { tag_name: "linux-experimental-alpha", published_at: "2026-11-05T00:00:00Z", prerelease: true, assets: [{ name: "Luna-linux-x86_64.flatpak", browser_download_url: "https://example.com/linux.flatpak" }] },
+      { tag_name: "v0.26.8", published_at: "2026-11-03T00:00:00Z", assets: windowsAssets }
+    ]) }));
+    const mixed = await platforms.newPage();
+    await mixed.goto(url, { waitUntil: "networkidle" });
+    assert.match(await mixed.locator("#download-button").getAttribute("href"), /v0\.26\.8.*\.exe$/);
+    assert.match(await mixed.locator("#portable-download").getAttribute("href"), /v0\.26\.8.*\.zip$/);
+    await platforms.close();
+
+    const unsafe = await browser.newContext();
+    await unsafe.route("https://api.github.com/**", route => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify([
+      { tag_name: "v0.26.8", published_at: "2026-11-03T00:00:00Z", assets: windowsAssets.map(asset => ({ ...asset, browser_download_url: "https://example.com/fake.exe" })) }
+    ]) }));
+    const guarded = await unsafe.newPage();
+    await guarded.goto(url, { waitUntil: "networkidle" });
+    assert.equal(await guarded.locator("#download-button").getAttribute("href"), "https://github.com/BadpigStudios/LunaEditor/releases");
+    await unsafe.close();
 
     const offline = await browser.newContext({ reducedMotion: "reduce" });
     await offline.route("https://api.github.com/**", route => route.abort());
@@ -127,6 +175,8 @@ async function main() {
     await plain.goto(url, { waitUntil: "networkidle" });
     assert(await plain.locator("h1").isVisible());
     assert(await plain.locator("#download-button").isVisible());
+    await plain.goto(url + "platforms.html", { waitUntil: "networkidle" });
+    assert(await plain.locator("#linux").isVisible() && await plain.locator("#android").isVisible());
     await plain.goto(url + "user-guide.html", { waitUntil: "networkidle" });
     assert.equal(await plain.locator(".guide-section:visible").count(), 17);
     await noScript.close();
@@ -147,7 +197,7 @@ async function main() {
       await manual.close();
     }
     assert.deepEqual(errors, []);
-    console.log("PASS: desktop/mobile layouts, local assets under /LunaEditor/, keyboard tabs, FAQ, release downloads/fallbacks, guide links/search/clear/anchors, 17 sections with no script, offline manual, and no browser errors.");
+    console.log("PASS: responsive homepage/guide/roadmap; keyboard tabs; accurate platform availability; three installer links; ZIP/latest-Windows selection; unsafe/offline fallbacks; guide search/anchors and offline manual; no-script content; no browser errors.");
   } finally {
     await browser.close();
   }
