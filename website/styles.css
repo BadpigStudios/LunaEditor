@@ -280,3 +280,12 @@ h2, .section-heading h2 { font-size: clamp(30px, 3.5vw, 44px); line-height: 1.18
   :root { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* Compact language control shares the header on desktop and wraps on narrow screens. */
+.language-switch{display:flex;gap:2px;flex:none;align-items:center;padding:3px;border:1px solid var(--line,#30374c);border-radius:10px;grid-column:auto}
+.header .language-switch a{font-size:11px;padding:5px 7px;border-radius:7px;text-decoration:none;line-height:1.2}
+.header nav.language-switch{flex-basis:auto;width:auto;gap:2px;margin-left:0}
+.language-switch a[aria-current]{background:#a5b8ff;color:#0b1020}
+.language-switch a:focus-visible{outline:2px solid #b8a4ff;outline-offset:3px}
+@media(max-width:1100px){.header{flex-wrap:wrap}.header .language-switch{margin-left:auto}}
+@media(max-width:600px){.header .language-switch{order:2;margin-left:auto}.header nav:not(.language-switch){order:3;width:100%;justify-content:center;flex-wrap:wrap}.header .nav-download{display:none}}

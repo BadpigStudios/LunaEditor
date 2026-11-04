@@ -31,6 +31,11 @@ const tools = {
   }
 };
 
+const translate = window.lunaText || (text => text);
+for (const tool of Object.values(tools)) {
+  for (const key of ["number", "title", "description", "alt", "caption"]) tool[key] = translate(tool[key]);
+  tool.details = tool.details.map(translate);
+}
 const tabs = [...document.querySelectorAll("[data-tool]")];
 function selectTool(tab, focus = false) {
   const tool = tools[tab.dataset.tool];
@@ -47,7 +52,7 @@ function selectTool(tab, focus = false) {
     const item = document.createElement("li"); item.textContent = text; return item;
   }));
   const image = document.querySelector("#tool-image");
-  image.src = `assets/${tool.image}`;
+  image.src = `${document.documentElement.lang === "es" ? "../" : ""}assets/${tool.image}`;
   image.alt = tool.alt;
   document.querySelector("#tool-caption").textContent = tool.caption;
   if (focus) tab.focus();
@@ -76,11 +81,11 @@ async function loadRelease() {
       headers: { Accept: "application/vnd.github+json" }, signal: controller.signal
     });
     if (response.status === 404) {
-      status.textContent = "A public Windows release hasn’t been published yet. Follow the project on GitHub.";
+      status.textContent = translate("A public Windows release hasn’t been published yet. Follow the project on GitHub.");
       return;
     }
     if (!response.ok) {
-      status.textContent = "Couldn’t check the latest release. Browse GitHub Releases to download Luna.";
+      status.textContent = translate("Couldn’t check the latest release. Browse GitHub Releases to download Luna.");
       return;
     }
     const published = await response.json();
@@ -91,7 +96,7 @@ async function loadRelease() {
     // A future Linux/Android release must not replace the Windows download.
     const release = releases.sort((a, b) => Date.parse(b.published_at || b.created_at) - Date.parse(a.published_at || a.created_at))
       .find(item => Array.isArray(item.assets) && item.assets.some(windowsAsset));
-    if (!release) { status.textContent = "No public Windows release is available yet."; return; }
+    if (!release) { status.textContent = translate("No public Windows release is available yet."); return; }
     const assets = release.assets || [];
     function downloadUrl(asset) {
       if (!asset) return null;
@@ -107,23 +112,23 @@ async function loadRelease() {
     const portableUrl = downloadUrl(portable);
     if (installerUrl) {
       document.querySelectorAll("[data-installer-link]").forEach(link => { link.href = installerUrl; });
-      document.querySelector("#download-label").textContent = "Download Luna installer";
-      status.textContent = `${release.tag_name} · Windows x64 · EXE installer · ${(installer.size / 1048576).toFixed(1)} MB`;
+      document.querySelector("#download-label").textContent = translate("Download Luna installer");
+      status.textContent = `${release.tag_name} · Windows x64 · ${translate("EXE installer")} · ${(installer.size / 1048576).toLocaleString(document.documentElement.lang, {minimumFractionDigits: 1, maximumFractionDigits: 1})} MB`;
     } else {
-      status.textContent = "No Windows installer in the latest release. Browse releases or use the portable ZIP.";
+      status.textContent = translate("No Windows installer in the latest release. Browse releases or use the portable ZIP.");
     }
     if (portableUrl) {
       document.querySelector("#portable-download").href = portableUrl;
-      document.querySelector("#portable-download").textContent = "Download portable ZIP";
+      document.querySelector("#portable-download").textContent = translate("Download portable ZIP");
     } else {
       document.querySelector("#portable-download").href = "https://github.com/BadpigStudios/LunaEditor/releases";
-      document.querySelector("#portable-download").textContent = "Portable ZIP unavailable · browse releases ↗";
+      document.querySelector("#portable-download").textContent = translate("Portable ZIP unavailable · browse releases ↗");
     }
     const installerVersion = installer?.name.match(/^Luna-(\d+\.\d+\.\d+)-windows-x64-setup\.exe$/i)?.[1];
     const releaseVersion = installerVersion || (/^v?\d+\.\d+\.\d+$/.test(release.tag_name) ? release.tag_name.replace(/^v/, "") : null);
     if (releaseVersion) document.querySelectorAll("[data-version]").forEach(item => { item.textContent = releaseVersion; });
   } catch {
-    status.textContent = "Couldn’t check the latest release. Browse GitHub Releases to download Luna.";
+    status.textContent = translate("Couldn’t check the latest release. Browse GitHub Releases to download Luna.");
     // Keep the ordinary Releases links when offline or rate-limited.
   } finally {
     clearTimeout(timeout);

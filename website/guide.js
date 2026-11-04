@@ -15,7 +15,7 @@ function filterGuide() {
     links.find(link => link.hash === `#${section.id}`).hidden = !matches;
     if (matches) visible++;
   });
-  count.textContent = query ? `${visible} of ${sections.length} sections match.` : "";
+  count.textContent = query ? (document.documentElement.lang === "es" ? `${visible} de ${sections.length} secciones coinciden.` : `${visible} of ${sections.length} sections match.`) : "";
   clear.disabled = !query;
   document.querySelector("#guide-empty").hidden = visible !== 0;
 }

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head><script src="../locales/es.js" defer></script><script src="../language.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Aprende Luna: primera edición, herramientas, efectos, fotogramas clave, secuencias, música, scripts y exportación.">
+  <link rel="canonical" href="https://badpigstudios.github.io/LunaEditor/es/user-guide.html">
+  <title>Guía de uso de Luna — De la primera edición a la exportación</title>
+  <link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="../guide.css">
+<link rel="alternate" hreflang="en" href="https://badpigstudios.github.io/LunaEditor/user-guide.html"><link rel="alternate" hreflang="es" href="https://badpigstudios.github.io/LunaEditor/es/user-guide.html"><link rel="alternate" hreflang="x-default" href="https://badpigstudios.github.io/LunaEditor/user-guide.html"></head>
+<body>
+  <a class="skip-link" href="#guide-content">Ir a la guía</a>
+  <header class="header guide-header">
+    <a class="wordmark" href="index.html" aria-label="Inicio de Luna"><img src="../assets/luna.svg" width="37" height="37" alt=""><span>luna</span></a>
+    <nav aria-label="Navegación de la guía"><a href="index.html">Editor</a><a href="#your-first-edit">Inicio rápido</a><a href="#export">Exportación</a></nav>
+    <a class="nav-github" href="https://badpigstudios.github.io/LunaEditor/#download">Descargar Luna ↗</a>
+  <!-- language:start --><nav class="language-switch" aria-label="Idioma"><a href="../user-guide.html" lang="en" hreflang="en" data-language="en" title="English">EN</a><a href="user-guide.html" lang="es" hreflang="es" data-language="es" title="Español" aria-current="true">ES</a></nav><!-- language:end --></header>
+  <div class="guide-hero"><span class="eyebrow">APRENDE A TU RITMO · LUNA 0.26.9</span><h1>Guía de uso de Luna</h1><p>Esta guía corresponde a <strong>Luna 0.26.9 para Windows x64</strong>. Aprende a preparar un proyecto, editar imagen y sonido y exportar una secuencia. Puedes consultar esta guía sin conexión en la carpeta de documentación.</p></div>
+  <div class="guide-layout">
+    <aside class="guide-sidebar"><h2>En esta guía</h2><nav aria-label="Contenido de la guía"><a href="#your-first-edit" data-guide-link>Tu primera edición</a>
+<a href="#install-and-save" data-guide-link>Instalación y guardado</a>
+<a href="#workspace" data-guide-link>Espacio de trabajo</a>
+<a href="#import-and-organize-media" data-guide-link>Medios y organización</a>
+<a href="#edit-the-timeline" data-guide-link>Edición de la línea de tiempo</a>
+<a href="#preview-and-audio-levels" data-guide-link>Vista previa y niveles de audio</a>
+<a href="#captions-and-subtitles" data-guide-link>Subtítulos</a>
+<a href="#automatic-music-ducking" data-guide-link>Atenuación automática de música</a>
+<a href="#controlled-prerender" data-guide-link>Prerender controlado</a>
+<a href="#effects-and-titles" data-guide-link>Efectos y títulos</a>
+<a href="#keyframes" data-guide-link>Fotogramas clave</a>
+<a href="#sequences" data-guide-link>Secuencias</a>
+<a href="#music" data-guide-link>Música</a>
+<a href="#custom-effects-and-automation" data-guide-link>Efectos personalizados y automatización</a>
+<a href="#export" data-guide-link>Exportación</a>
+<a href="#keyboard-shortcuts" data-guide-link>Atajos de teclado</a>
+<a href="#common-problems" data-guide-link>Problemas frecuentes</a></nav></aside>
+    <main id="guide-content">
+      <form class="guide-search" role="search" onsubmit="return false">
+        <label for="guide-search">Buscar un tema</label>
+        <div class="guide-search-row"><input id="guide-search" type="search" placeholder="Prueba secuencias, fotogramas clave, SoundFont…" autocomplete="off"><button id="guide-clear" type="button" disabled>Limpiar</button></div>
+        <span id="guide-results" role="status" aria-live="polite"></span>
+      </form>
+      <p id="guide-empty" hidden>Ninguna sección coincide. Prueba otra palabra o limpia la búsqueda.</p>
+      <section class="guide-section" id="your-first-edit"><h2>Tu primera edición</h2>
+<ol>
+<li>Abre Luna y pulsa <strong>Nuevo proyecto</strong>. El menú de proyectos también permite abrir proyectos recientes, recuperar copias, buscar actualizaciones y cambiar Preferencias o Apariencia.</li>
+<li>Importa videos, imágenes y audio desde <strong>Archivo &gt; Importar medios</strong>. Espera a que termine el indicador de carga antes de arrastrar un archivo.</li>
+<li>Arrastra los medios a la línea de tiempo. La silueta indica la pista y posición de destino. Las pistas visuales permanecen encima de las de audio.</li>
+<li>Recorta los extremos de los clips, organiza la historia y pulsa <strong>Espacio</strong> para reproducirla.</li>
+<li>Guarda con <strong>Ctrl+S</strong> como <code>.luna</code>. Para entregar el resultado, abre <strong>Archivo &gt; Exportar medios</strong> con <strong>Ctrl+E</strong>.</li>
+</ol>
+<p>El proyecto guarda referencias a los archivos originales: conserva los medios en una ubicación disponible. Los proyectos antiguos <code>.luma</code> se pueden abrir; al guardarlos se usa <code>.luna</code>.</p>
+</section><section class="guide-section" id="install-and-save"><h2>Instalación y guardado</h2>
+<p>Usa el instalador de Windows x64 o extrae la carpeta completa del ZIP portátil. Conserva las carpetas de códecs e instrumentos junto al ejecutable. En Windows N puede ser necesario Media Feature Pack de Microsoft.</p>
+<p>Guarda con frecuencia como <code>.luna</code>. Guardar como permite crear otra copia. Las copias automáticas y el historial de recuperación se configuran en Preferencias; no reemplazan al proyecto original. Desde el menú de proyectos puedes recuperar una copia y guardarla con otro nombre. Mantén los originales y los instrumentos personalizados disponibles: el archivo del proyecto no los empaqueta.</p>
+</section><section class="guide-section" id="workspace"><h2>Espacio de trabajo</h2>
+<p>El panel <strong>Medios</strong> organiza archivos importados; <strong>Efectos</strong> contiene los recursos incluidos. La vista previa muestra la composición. El <strong>Inspector</strong> ofrece propiedades compatibles con el elemento seleccionado y la línea de tiempo organiza los clips.</p>
+<p>Arrastra los divisores para ajustar los paneles. Usa el control de tamaño para cambiar las miniaturas de Medios y Efectos. En <strong>Preferencias</strong> puedes restablecer el espacio, ajustar reproducción y copias de seguridad. <strong>Apariencia</strong> permite elegir un tema o editar colores. <strong>Aplicar</strong> conserva abierta esa ventana; <strong>Aplicar y cerrar</strong> termina la edición.</p>
+<p>Para cambiar el idioma, abre <strong>Preferencias &gt; Edición y vista previa &gt; Language / Idioma</strong>, elige <strong>English</strong> o <strong>Español</strong> y aplica. Reinicia Luna para actualizar toda la interfaz. El idioma no traduce nombres de proyectos, texto de títulos, subtítulos, rutas ni scripts. Los campos numéricos y scripts siguen usando punto decimal.</p><figure><img src="../assets/workspace.webp" width="1440" height="960" loading="lazy" alt="Panel Medios, vista previa, Inspector y línea de tiempo de Luna."><figcaption>Panel Medios, vista previa, Inspector y línea de tiempo de Luna.</figcaption></figure>
+</section><section class="guide-section" id="import-and-organize-media"><h2>Medios y organización</h2>
+<p>Importa archivos o carpetas desde Archivo o el panel Medios. Usa búsqueda, filtros y colecciones para localizar material. El indicador circular significa que el archivo se está preparando; aún no se puede arrastrar. Si falta una fuente, usa las opciones de localizar o volver a vincular.</p>
+<p>El visor de origen permite revisar una fuente y marcar entrada y salida con <strong>I</strong> y <strong>O</strong>. Las valoraciones y rangos se guardan con el proyecto. El menú contextual ofrece acciones adecuadas al elemento, incluyendo creación de proxies. Los títulos, efectos y stickers se encuentran en su biblioteca, separados de los medios importados.</p>
+</section><section class="guide-section" id="edit-the-timeline"><h2>Edición de la línea de tiempo</h2>
+<ol>
+<li>Arrastra el cuerpo de un clip para moverlo; arrastra cualquiera de sus extremos para recortarlo. Los clips de la misma pista necesitan espacio libre.</li>
+<li>Coloca el cursor desde la regla y usa <strong>Ctrl+B</strong> para dividir un clip seleccionado.</li>
+<li>Usa <strong>Ctrl+clic</strong> para alternar elementos, <strong>Mayús+clic</strong> para añadirlos o dibuja un rectángulo desde un espacio vacío. Arrastra un clip seleccionado para mover el grupo conservando su distribución.</li>
+<li>Usa el menú Línea de tiempo, la barra o el menú contextual para duplicar, cerrar huecos, editar con desplazamiento o deslizar el contenido de una fuente. <strong>Ctrl+Z</strong> deshace.</li>
+</ol>
+<p>Un clic en una pista vacía deselecciona; la búsqueda temporal se hace en la regla. Arrastra con el botón central para desplazar la vista. <strong>Mayús+rueda</strong> desplaza el tiempo; <strong>Ctrl+rueda</strong> cambia el zoom; la rueda desplaza las pistas. Los controles de pista permiten bloquear, silenciar y definir el destino de las operaciones.</p>
+</section><section class="guide-section" id="preview-and-audio-levels"><h2>Vista previa y niveles de audio</h2>
+<p><strong>Espacio</strong> reproduce o pausa. La resolución de vista previa reduce la carga de visualización sin cambiar la exportación. El zoom solo modifica el tamaño con el que ves la imagen.</p>
+<p>Selecciona un clip visual y usa <strong>Transformar</strong> para moverlo o escalarlo, o <strong>Deformar</strong> para ajustar la perspectiva. Los controles de deformación ofrecen esquinas y bordes libres, perspectiva vinculada o solo bordes, además de valores exactos, cuadrícula y preajustes. <strong>Mayús</strong> limita el eje, <strong>Ctrl</strong> permite precisión y <strong>Alt</strong> evita el ajuste magnético. Los gestos se detienen antes de plegar la imagen sobre sí misma.</p>
+<p>Los valores animados se modifican mediante un fotograma clave en el tiempo actual. Si una variable, disparador o controlador de efecto dirige una propiedad, edita ese controlador. Cancelar en la ventana de deformación restaura el clip; Restablecer limpia los valores editables.</p>
+<p>El volumen vertical del monitor y su botón de silencio solo afectan a la escucha. La ganancia del clip y del proyecto sí afectan a la exportación. El medidor usa verde, amarillo y rojo para ayudar a evitar saturación.</p>
+<p>Pulsa <strong>Mezclador</strong> debajo del medidor o abre <strong>Ver &gt; Mezclador de audio</strong>. Cada canal tiene ganancia en decibelios, medidores estéreo, balance, silencio y solo; el canal maestro permanece visible. El audio de las pistas de video también participa. Varios canales en solo pueden sonar a la vez. Los ajustes se guardan y exportan con el proyecto.</p>
+<p>Haz doble clic en un fader o balance para restablecerlo. En el canal seleccionado, Arriba/Abajo modifica ganancia, Izquierda/Derecha el balance, Inicio fija 0 dB y Fin silencia. Puedes limpiar los indicadores de pico haciendo clic en su fila. Las pistas bloqueadas y la exportación impiden cambios del mezclador.</p>
+<p>Para escenas exigentes, reduce la resolución, usa proxies o prerender y revisa las preferencias gráficas y de caché. La exportación utiliza las fuentes originales. La aceleración disponible depende del hardware, del medio y del codificador.</p>
+</section><section class="guide-section" id="captions-and-subtitles"><h2>Subtítulos</h2>
+<p>Importa un archivo con <strong>Archivo &gt; Importar subtítulos (SRT / VTT)</strong> o crea un texto de tres segundos con <strong>Herramientas &gt; Añadir subtítulo en el cursor</strong>. Los subtítulos ocupan pistas visuales dedicadas. Las entradas superpuestas usan pistas adicionales del mismo grupo de idioma para conservar sus tiempos.</p>
+<p>En <strong>Herramientas &gt; Subtítulos</strong>, elige pista y entrada, edita inicio, final y texto multilínea y pulsa <strong>Actualizar subtítulo</strong>. Añadir y Eliminar gestionan entradas. <strong>Aplicar</strong> acepta los cambios; <strong>Cancelar</strong> los descarta. También puedes mover y recortar los clips en la línea de tiempo.</p>
+<p>El estilo de pista define código de idioma, tipografía, tamaño relativo al lienzo, color, posición vertical, sombra y fondo. <strong>Aplicar estilo al idioma</strong> reemplaza tipografía y animación de tamaño, color y posición de todas sus pistas. El estilo avanzado permite personalizar una entrada. El botón <strong>H</strong> oculta una pista de la vista previa y del video exportado.</p>
+<p><strong>Archivo &gt; Exportar pista de subtítulos</strong> guarda el grupo seleccionado como SRT o WebVTT. El botón <strong>Exportar idioma</strong> guarda el estado de trabajo incluso antes de Aplicar. Estos archivos contienen tiempos y texto; el estilo visual se conserva en el proyecto. Se admite importación UTF-8 y UTF-16. El marcado importado se reduce a texto y al estilo de Luna.</p>
+<p>En la exportación de video, <strong>Imagen &gt; Incrustar pistas de subtítulos visibles</strong> está activado inicialmente. Desactívalo para entregar subtítulos por separado. Oculta los otros idiomas si solo quieres incrustar uno. No se ofrece transcripción automática ni lectura de pistas de subtítulos incrustadas en un video.</p>
+</section><section class="guide-section" id="automatic-music-ducking"><h2>Atenuación automática de música</h2>
+<p>La atenuación baja la música cuando hay diálogo y la recupera entre frases. Coloca música y diálogo en pistas distintas y abre <strong>Herramientas &gt; Atenuación automática de música</strong>, también disponible en el menú contextual de pista.</p>
+<ol>
+<li>Elige la pista de música y una o varias pistas de referencia. Una pista de video con diálogo puede servir de referencia.</li>
+<li>Ajusta reducción en dB, umbral, ataque, recuperación y mantenimiento. Define el rango de análisis en segundos, hasta dos horas, y la interpolación.</li>
+<li>Activa <strong>Analizar audio de referencia al aplicar</strong> y pulsa Aplicar. Se puede cancelar desde <strong>Herramientas &gt; Cancelar tarea de medios</strong>.</li>
+<li>En <strong>Editar curva de ganancia</strong>, añade o actualiza puntos de tiempo y decibelios, elimina puntos interiores, desactiva o quita la atenuación. Desmarca el análisis para conservar cambios manuales. Los extremos del rango permanecen.</li>
+</ol>
+<p>El análisis mide la mezcla de referencia después de efectos y faders, sin el maestro ni la atenuación existente. Las referencias silenciadas no activan la curva, pero el ruido o la música de una referencia sí pueden hacerlo. Repite el análisis si cambian los tiempos del diálogo. La curva multiplica la ganancia tanto en vista previa como en exportación y solo puede reducirla; conserva los fundidos y fotogramas de volumen del clip.</p>
+</section><section class="guide-section" id="controlled-prerender"><h2>Prerender controlado</h2>
+<p>Selecciona clips y abre <strong>Herramientas &gt; Prerenderizar rango de la línea de tiempo</strong>. El rango inicial abarca la selección o, sin selección, la secuencia. Ajusta inicio, final y resolución. Iniciar también selecciona esa resolución en la vista previa.</p>
+<p>Luna prepara cada fotograma en la caché de disco. Una línea dorada marca el rango solicitado y verde la parte preparada. La vista previa tiene prioridad y la preparación se pausa al reproducir. El rango debe caber en el límite de caché de <strong>Preferencias gráficas &gt; Cachés</strong>; los fotogramas sin comprimir pueden ocupar varios gigabytes.</p>
+<p>Los fotogramas terminados se protegen durante la sesión hasta editar imágenes, cambiar secuencia o ajustes de renderizado, proxies o caché, o liberar el rango desde Herramientas. Liberar conserva los archivos como caché normal; limpiar la caché los elimina. Otro rango sustituye al anterior. El zoom no cambia la resolución almacenada.</p>
+<p>El prerender prepara imagen, no audio. Exportar sigue renderizando los originales e incluye efectos de audio y atenuación. Luna reutiliza controles constantes, programas GPU y trabajo de clips activos para reducir el coste de proyectos densos. Una acumulación grande de efectos visibles aún puede superar el tiempo disponible por fotograma.</p>
+</section><section class="guide-section" id="effects-and-titles"><h2>Efectos y títulos</h2>
+<p>Abre <strong>Efectos</strong>, elige una categoría y arrastra un preajuste a la línea de tiempo siguiendo la silueta de colocación. Los efectos visuales y de audio usan pistas compatibles. El Inspector permite modificar parámetros y alcance.</p>
+<p>Las transiciones se aplican a un extremo o a un corte entre clips; no son clips independientes. Arrástralas al punto deseado y selecciona su superposición para ajustar duración y opciones. Los cortes necesitan material de origen disponible para la superposición.</p>
+<p>Añade un título y edita su texto en el Inspector. <strong>Herramientas &gt; Texto y estilo del título</strong> ofrece tipografía, alineación, colores, contornos, sombras, degradados, resplandor y profundidad. Comprueba la legibilidad al tamaño final. Los stickers pueden ser estáticos o animados; sus controles dependen del tipo seleccionado.</p><figure><img src="../assets/effects.webp" width="1440" height="960" loading="lazy" alt="Biblioteca de efectos y transiciones incluidos."><figcaption>Biblioteca de efectos y transiciones incluidos.</figcaption></figure>
+</section><section class="guide-section" id="keyframes"><h2>Fotogramas clave</h2>
+<p>Un fotograma clave guarda un valor de propiedad en un tiempo concreto. Dos claves de opacidad permiten fundir un título y dos de posición pueden moverlo.</p>
+<ol>
+<li>Selecciona un clip y elige la propiedad en su menú con rombo inferior.</li>
+<li>Coloca el cursor desde la regla y pulsa <strong>K</strong>, el botón <strong>◇</strong> o el rombo de la propiedad en el Inspector.</li>
+<li>Cambia el valor y crea otra clave en otro tiempo. Al iniciar una animación después del comienzo, se añade un ancla inicial para conservar el aspecto previo.</li>
+<li>Arrastra los rombos visibles para cambiar su tiempo. Selecciona uno para editar su valor o abre su menú contextual para cambiar interpolación y curvas.</li>
+</ol>
+<p>Los fotogramas automáticos registran cambios compatibles del Inspector. Sin esa opción, los canales ya animados siguen siendo editables. Seleccionar un rombo enfoca su propiedad y tiempo; hacer clic en la regla vuelve al cursor. Supr elimina una clave seleccionada. Las variables, disparadores y efectos pueden controlar una propiedad en lugar de los cambios directos.</p><figure><img src="../assets/keyframes.webp" width="1440" height="960" loading="lazy" alt="Fotogramas clave directamente sobre un clip de la línea de tiempo."><figcaption>Fotogramas clave directamente sobre un clip de la línea de tiempo.</figcaption></figure>
+</section><section class="guide-section" id="sequences"><h2>Secuencias</h2>
+<p>Una secuencia es una línea de tiempo independiente dentro del proyecto. Puedes conservar una edición completa, un tráiler y otra versión juntos. Usa las pestañas inferiores para cambiar, <strong>+</strong> para crear o <strong>Proyecto &gt; Secuencias</strong> para gestionar, duplicar, renombrar o eliminar.</p>
+<p>Cada secuencia conserva pistas, clips, marcadores, acciones y duración. Los medios y variables globales se comparten, al igual que lienzo y frecuencia del proyecto. Usa otro proyecto si necesitas una configuración de lienzo independiente.</p>
+<p><strong>Solo se exporta la secuencia activa.</strong> Comprueba el campo Secuencia de la ventana de exportación. Para exportar otra, cancela, cambia de pestaña y vuelve a exportar. Actualmente no se pueden anidar secuencias como clips.</p>
+</section><section class="guide-section" id="music"><h2>Música</h2>
+<ol>
+<li>Abre Música y elige <strong>Nuevo patrón</strong>. Define nombre, tempo, compases, instrumento y un patrón inicial opcional.</li>
+<li>Pulsa <strong>Crear patrón</strong> para añadir un clip en una pista de audio compatible y abrir el editor de notas.</li>
+<li>Usa Dibujar para añadir y mover notas, Pintar para ritmos y Borrar o arrastre derecho para quitarlas. Ajusta duración, cuadrícula, intensidad y acordes desde la barra.</li>
+<li>Arrastra cuerpos para cambiar tiempo y tono, extremos derechos para duración y barras inferiores para intensidad. Ctrl+clic y Ctrl+arrastre ayudan a seleccionar.</li>
+<li>Usa <strong>Patrón</strong> para escucharlo; el teclado permite probar notas. La vista previa de video reproduce la música dentro de la edición.</li>
+</ol>
+<p>Los instrumentos incluidos funcionan de inmediato. <strong>Cargar SF2 / paquete WAV</strong> admite SoundFont 2 y paquetes WAV compatibles. Puedes cargar un archivo antes de crear el patrón y elegir un preajuste, o cambiar el instrumento de un patrón existente. Los ajustes avanzados ofrecen tempo y una lista de notas. Importar MIDI trae notas, no su sonido: elige un instrumento.</p>
+<p>Con el foco en el editor de notas, Ctrl+A/C/V, Ctrl+D, Supr y las flechas operan sobre notas. Haz clic en la línea de tiempo para volver a sus comandos. Conserva disponibles los archivos de instrumentos personalizados referenciados por el proyecto.</p><figure><img src="../assets/music.webp" width="1440" height="960" loading="lazy" alt="Editor de notas con un carril de intensidad."><figcaption>Editor de notas con un carril de intensidad.</figcaption></figure>
+</section><section class="guide-section" id="custom-effects-and-automation"><h2>Efectos personalizados y automatización</h2>
+<p>Abre <strong>Herramientas &gt; Creador de efectos (visual / código)</strong> para un elemento compatible. La primera vista es el editor visual: arrastra bloques, conecta puertos compatibles y ajusta parámetros. Cambia a código para usar scripts con tipos definidos, sugerencias de completado y salida de depuración.</p>
+<p>Empieza con cambios pequeños y previsualiza antes de ampliar. El lenguaje es restringido; no ejecuta Java, una consola del sistema ni programas externos arbitrarios. Las palabras del lenguaje, identificadores y sugerencias de código se mantienen estables en ambos idiomas.</p>
+<p><strong>Proyecto &gt; Variables globales</strong> gestiona valores con tipos definidos. Los disparadores son bloques seleccionables que ejecutan acciones sin un medio. Pueden controlar una variable, propiedad de clip o del proyecto, con duración e interpolación. Si una propiedad está dirigida, modifica su controlador.</p>
+</section><section class="guide-section" id="export"><h2>Exportación</h2>
+<ol>
+<li>Activa la secuencia que quieres entregar y revisa sus cortes, inicio y final.</li>
+<li>Abre <strong>Archivo &gt; Exportar medios</strong> o <strong>Ctrl+E</strong>. El campo Secuencia identifica la línea de tiempo que se renderizará en todas las pestañas.</li>
+<li>En Imagen, elige formato, dimensiones, frecuencia, calidad o tasa de bits y velocidad.</li>
+<li>En Audio, decide si incluir sonido y ajusta tasa de bits, muestreo, canales y profundidad compatible. Elige un contenedor de audio para exportar solo sonido.</li>
+<li>En Rango, define inicio y final; final <code>0</code> significa toda la duración. Codificador y Aceleración ofrecen opciones de hardware. Las combinaciones no compatibles pueden requerir otro ajuste o codificación por software.</li>
+<li>Continúa al selector de destino. El nombre sugerido incluye proyecto y secuencia. Elige otro archivo de salida, espera a que termine y revisa el resultado.</li>
+</ol>
+<p>Se renderizan efectos, títulos, automatización y mezcla de la secuencia activa. El volumen del monitor, zoom y resolución de vista previa no determinan volumen, tamaño ni calidad de salida. Guarda el resultado separado de los archivos originales y del proyecto.</p>
+</section><section class="guide-section" id="keyboard-shortcuts"><h2>Atajos de teclado</h2>
+<p><strong>Editar &gt; Atajos de teclado</strong> permite buscar comandos, modificar teclas, resolver conflictos y guardar perfiles. Estos son los valores predeterminados:</p>
+<div class="guide-table"><table><thead><tr>
+<th scope="col">Acción</th>
+<th scope="col">Atajo</th>
+</tr></thead><tbody>
+<tr><td>Nuevo / abrir proyecto</td><td>Ctrl+N / Ctrl+O</td></tr>
+<tr><td>Guardar / guardar como</td><td>Ctrl+S / Ctrl+Mayús+S</td></tr>
+<tr><td>Importar / exportar</td><td>Ctrl+I / Ctrl+E</td></tr>
+<tr><td>Reproducir o pausar</td><td>Espacio</td></tr>
+<tr><td>Deshacer / rehacer</td><td>Ctrl+Z / Ctrl+Y</td></tr>
+<tr><td>Dividir clip seleccionado</td><td>Ctrl+B</td></tr>
+<tr><td>Duplicar selección</td><td>Ctrl+D</td></tr>
+<tr><td>Selección / cuchilla</td><td>V / C</td></tr>
+<tr><td>Añadir fotograma clave</td><td>K</td></tr>
+<tr><td>Seleccionar / deseleccionar elementos</td><td>Ctrl+A / Ctrl+Mayús+A</td></tr>
+<tr><td>Corte anterior / siguiente</td><td>Ctrl+Izquierda / Ctrl+Derecha</td></tr>
+<tr><td>Entrada / salida de origen</td><td>I / O en el visor de origen</td></tr>
+<tr><td>Buscar fotograma de origen</td><td>F</td></tr>
+</tbody></table></div>
+</section><section class="guide-section" id="common-problems"><h2>Problemas frecuentes</h2>
+<ul>
+<li><strong>Un clip no se arrastra:</strong> espera a que termine su carga y revisa tipo de pista, bloqueo y espacio libre.</li>
+<li><strong>Falta un medio:</strong> localiza o vuelve a vincular el original. El proyecto no incluye todos sus archivos de origen.</li>
+<li><strong>El cursor no cambia al pulsar una pista vacía:</strong> usa la regla; la pista vacía sirve para seleccionar o deseleccionar.</li>
+<li><strong>Se exportó otra edición:</strong> cancela, activa la secuencia correcta y comprueba el campo Secuencia.</li>
+<li><strong>El volumen de exportación difiere de la escucha:</strong> el monitor solo afecta a la escucha; ajusta ganancia del clip o proyecto.</li>
+<li><strong>La reproducción se entrecorta:</strong> reduce resolución, usa proxies o prerender y revisa caché y gráficos. Los efectos pesados pueden superar la capacidad del equipo.</li>
+<li><strong>Un instrumento no suena:</strong> revisa preajuste, notas, intensidad, silencio y volumen. Mantén disponibles los archivos SF2/WAV. Prueba un instrumento incluido para comparar.</li>
+<li><strong>Una propiedad no se puede editar:</strong> revisa claves, variables, disparadores, efectos, bloqueo y compatibilidad del clip.</li>
+</ul>
+<p>Si persiste un problema, informa en <a href="https://github.com/BadpigStudios/LunaEditor/issues">GitHub Issues</a>. Incluye versión de Windows, pasos y texto del error. Comparte medios o proyectos solo si quieres que sean públicos.</p>
+</section>
+    </main>
+  </div>
+  <footer class="footer"><a class="wordmark" href="index.html">luna</a><p>Tu próxima historia empieza con un primer corte.</p><div><a href="#your-first-edit">Volver al inicio rápido ↑</a><a href="https://github.com/BadpigStudios/LunaEditor/issues">Reportar un problema ↗</a></div></footer>
+  <script src="../guide.js" defer></script>
+</body>
+</html>

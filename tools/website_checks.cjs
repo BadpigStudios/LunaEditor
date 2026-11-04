@@ -88,7 +88,7 @@ async function main() {
     assert.match(page.url(), /\/LunaEditor\/user-guide\.html$/);
     await page.getByRole("heading", { name: "Luna user guide", exact: true }).waitFor();
     assert.equal(await page.locator(".guide-section").count(), 17);
-    assert.match(await page.locator(".guide-hero").innerText(), /LUNA 0\.26\.8/);
+    assert.match(await page.locator(".guide-hero").innerText(), /LUNA 0\.26\.9/);
     assert(await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].every(link => document.getElementById(link.hash.slice(1)))));
     const search = page.locator("#guide-search");
     await search.fill("SoundFont");
@@ -208,8 +208,94 @@ async function main() {
       }));
       await manual.close();
     }
+    const spanish = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+    await spanish.route("https://api.github.com/**", route => route.fulfill({ status: 404, body: "{}" }));
+    const es = await spanish.newPage();
+    es.on("pageerror", error => errors.push(error.message));
+    await es.goto(url + "es/index.html", { waitUntil: "networkidle" });
+    assert.equal(await es.locator("html").getAttribute("lang"), "es");
+    assert.match(await es.locator("h1").innerText(), /Tus ideas/);
+    await es.screenshot({ path: path.join(output, "website-hero-es.png") });
+    assert.match(await es.locator("#release-status").innerText(), /Aún no hay/);
+    await es.getByRole("tab", { name: "Da forma al sonido" }).click();
+    assert.match(await es.locator("#tool-title").innerText(), /ritmo/);
+    assert.equal(await es.locator("#tool-image").getAttribute("src"), "../assets/music.webp");
+    assert(await es.locator("#tool-image").evaluate(image => image.complete && image.naturalWidth > 0));
+    for (const width of [320, 375, 768, 1440]) {
+      await es.setViewportSize({ width, height: 1000 });
+      for (const document of ["index.html", "platforms.html", "user-guide.html"]) {
+        await es.goto(url + "es/" + document, { waitUntil: "networkidle" });
+        assert(await es.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${width}: Spanish ${document} overflows`);
+        assert(await es.locator('[data-language="en"]').isVisible());
+        assert(await es.locator('[data-language="es"][aria-current]').isVisible());
+        if (width === 375 && document === "index.html") await es.screenshot({ path: path.join(output, "website-hero-es-mobile.png") });
+      }
+    }
+    assert.equal(await es.locator(".guide-section").count(), 17);
+    await es.locator("#guide-search").fill("atenuación");
+    assert(await es.locator("#automatic-music-ducking").isVisible());
+    assert.match(await es.locator("#guide-results").innerText(), /de 17 secciones coinciden/);
+    await es.screenshot({ path: path.join(output, "website-guide-es-mobile.png"), fullPage: true });
+    // Preserve topic anchors and persist only explicit selections.
+    await es.goto(url + "user-guide.html#sequences", { waitUntil: "networkidle" });
+    await es.locator('[data-language="es"]').click();
+    await es.waitForURL("**/es/user-guide.html#sequences");
+    assert.equal(await es.evaluate(() => localStorage.getItem("luna-language")), "es");
+    await es.goto(url + "platforms.html#android", { waitUntil: "networkidle" });
+    await es.waitForURL("**/es/platforms.html#android");
+    await es.locator('[data-language="en"]').click();
+    await es.waitForURL("**/platforms.html#android");
+    assert.equal(await es.evaluate(() => localStorage.getItem("luna-language")), "en");
+    await spanish.close();
+
+    const blocked = await browser.newContext();
+    await blocked.addInitScript(() => Object.defineProperty(window, "localStorage", { get() { throw new Error("blocked storage"); } }));
+    await blocked.route("https://api.github.com/**", route => route.abort());
+    const blockedPage = await blocked.newPage();
+    blockedPage.on("pageerror", error => errors.push(error.message));
+    await blockedPage.goto(url + "es/index.html", { waitUntil: "networkidle" });
+    assert.match(await blockedPage.locator("#release-status").innerText(), /No se pudo consultar/);
+    await blockedPage.locator('[data-language="en"]').click();
+    await blockedPage.waitForURL("**/index.html");
+    await blocked.close();
+
+    const plainSpanish = await browser.newContext({ javaScriptEnabled: false });
+    const staticEs = await plainSpanish.newPage();
+    for (const document of ["index.html", "platforms.html", "user-guide.html"]) {
+      await staticEs.goto(url + "es/" + document, { waitUntil: "networkidle" });
+      assert.equal(await staticEs.locator("html").getAttribute("lang"), "es");
+      assert(await staticEs.locator("h1").isVisible());
+    }
+    assert.equal(await staticEs.locator(".guide-section:visible").count(), 17);
+    await plainSpanish.close();
+
+    const esRelease = await browser.newContext();
+    await esRelease.route("https://api.github.com/**", route => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify([
+      { tag_name: "v0.26.8", published_at: "2026-11-03T00:00:00Z", assets: [windowsAssets[0]] }
+    ]) }));
+    const esDownload = await esRelease.newPage();
+    await esDownload.goto(url + "es/index.html", { waitUntil: "networkidle" });
+    assert.equal(await esDownload.locator("#download-label").innerText(), "Descargar el instalador de Luna");
+    assert.match(await esDownload.locator("#release-status").innerText(), /Instalador EXE/);
+    assert.match(await esDownload.locator("#portable-download").innerText(), /ZIP portátil no disponible/);
+    await esRelease.close();
+
+    const spanishOfflineGuide = path.resolve(__dirname, "../docs/user-guide.es.html");
+    if (await fs.stat(spanishOfflineGuide).catch(() => null)) {
+      const localContext = await browser.newContext({ offline: true });
+      const localEs = await localContext.newPage();
+      localEs.on("pageerror", error => errors.push(error.message));
+      await localEs.goto(pathToFileURL(spanishOfflineGuide).href);
+      await localEs.locator("#guide-search").fill("secuencia");
+      assert(await localEs.locator("#sequences").isVisible());
+      assert(await localEs.evaluate(async () => {
+        for (const image of document.images) { image.loading = "eager"; await image.decode(); }
+        return [...document.images].every(image => image.src.startsWith("data:"));
+      }));
+      await localContext.close();
+    }
     assert.deepEqual(errors, []);
-    console.log("PASS: responsive homepage/guide/roadmap; keyboard tabs; accurate platform availability; three installer links; ZIP/latest-Windows selection; unsafe/offline fallbacks; guide search/anchors and offline manual; no-script content; no browser errors.");
+    console.log("PASS: responsive homepage/guide/roadmap; keyboard tabs; accurate platform availability; three installer links; ZIP/latest-Windows selection; unsafe/offline fallbacks; guide search/anchors and offline manual; no-script content; EN/ES pages, persistence, blocked storage, Spanish downloads and offline guide; no browser errors.");
   } finally {
     await browser.close();
   }
